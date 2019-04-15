@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Gigapet</string>
+    <string name="title_activity_parent_main">ParentMainActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="parent_options">Parental Options</string>
 </resources>
