@@ -19,7 +19,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_options_sidebar_button"
-        tools:srcCompat="@drawable/temp_background_image"></ImageView>
+        android:src="@drawable/temp_background_image"/>
 
 
 
@@ -35,7 +35,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_options_sidebar_button"
-        tools:srcCompat="@drawable/temp_gigapet_image"></ImageView>
+        android:src="@drawable/temp_gigapet_image"/>
 
 
     <ImageView
