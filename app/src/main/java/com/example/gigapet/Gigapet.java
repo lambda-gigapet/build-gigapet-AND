@@ -1,11 +1,12 @@
 package com.example.gigapet;
 
 public class Gigapet {
-private String name;
-private String uniqueId;
-private int exp;
-private int repoId;
-private int[] imageResource;
+    private String name;
+    private String uniqueId;
+    private int state;
+    private int exp;
+    private int repoId;
+    private int[] imageResource;
 
     public Gigapet(String name, String uniqueId) {
         this.name = name;
@@ -46,5 +47,13 @@ private int[] imageResource;
 
     public int[] getImageResource() {
         return imageResource;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }
