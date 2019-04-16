@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    tools:context=".ParentMainActivity$PlaceholderFragment">
+
+    <TextView
+        android:id="@+id/section_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Food Intake"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/tv_history_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WEEKLY"
+        android:textSize="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/section_label" />
+
+    <Spinner
+        android:id="@+id/tv_child_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guide_graph_view_split_1"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner_meal_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:entries="@array/meal_type"
+        android:text="Steve's Eating Habits"
+        app:layout_constraintBottom_toTopOf="@+id/guide_graph_view_split_1"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/gv_line_graph"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="45dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guide_graph_view_split_2" />
+
+    <lecho.lib.hellocharts.view.PieChartView
+        android:id="@+id/pc_pie_chart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/guide_graph_view_split_2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guide_graph_view_split_vertical_1"
+        app:layout_constraintTop_toBottomOf="@id/guide_graph_view_split_1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guide_graph_view_split_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="99dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guide_graph_view_split_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="348dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guide_graph_view_split_vertical_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="270dp" />
+
+    <TextView
+        android:id="@+id/tv_fruits"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Fruit"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_veggies"
+        app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
+        app:layout_constraintRight_toLeftOf="@id/iv_fruits"
+        app:layout_constraintTop_toBottomOf="@id/guide_graph_view_split_1" />
+
+    <TextView
+        android:id="@+id/tv_legend_veggies"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Veggies"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_carbs"
+        app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
+        app:layout_constraintRight_toLeftOf="@id/iv_legend_veggies"
+        app:layout_constraintTop_toBottomOf="@id/tv_fruits" />
+
+    <TextView
+        android:id="@+id/tv_legend_carbs"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Carbs"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_protein"
+        app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
+        app:layout_constraintRight_toLeftOf="@id/iv_legend_carbs"
+        app:layout_constraintTop_toBottomOf="@id/tv_legend_veggies" />
+
+    <TextView
+        android:id="@+id/tv_legend_protein"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Protein"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_dairy"
+        app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
+        app:layout_constraintRight_toLeftOf="@id/iv_legend_protein"
+        app:layout_constraintTop_toBottomOf="@id/tv_legend_carbs" />
+
+    <TextView
+        android:id="@+id/tv_legend_dairy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Dairy"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_sweets"
+        app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
+        app:layout_constraintRight_toLeftOf="@id/iv_legend_dairy"
+        app:layout_constraintTop_toBottomOf="@id/tv_legend_protein" />
+
+    <TextView
+        android:id="@+id/tv_legend_sweets"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Sweets"
+        app:layout_constraintBottom_toTopOf="@id/guide_graph_view_split_2"
+        app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
+        app:layout_constraintRight_toLeftOf="@id/iv_legend_sweets"
+        app:layout_constraintTop_toBottomOf="@id/tv_legend_dairy" />
+
+    <ImageView
+        android:id="@+id/iv_fruits"
+        android:src="@color/colorAccent"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_veggies"
+        app:layout_constraintLeft_toRightOf="@id/tv_fruits"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guide_graph_view_split_1" />
+
+    <ImageView
+        android:id="@+id/iv_legend_veggies"
+        android:src="@color/colorAccent"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_carbs"
+        app:layout_constraintLeft_toRightOf="@id/tv_legend_veggies"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_fruits" />
+
+    <ImageView
+        android:id="@+id/iv_legend_carbs"
+        android:src="@color/colorAccent"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_protein"
+        app:layout_constraintLeft_toRightOf="@id/tv_legend_carbs"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_legend_veggies" />
+
+    <ImageView
+        android:id="@+id/iv_legend_protein"
+        android:src="@color/colorAccent"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_dairy"
+        app:layout_constraintLeft_toRightOf="@id/tv_legend_protein"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_legend_carbs" />
+
+    <ImageView
+        android:id="@+id/iv_legend_dairy"
+        android:src="@color/colorAccent"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_sweets"
+        app:layout_constraintLeft_toRightOf="@id/tv_legend_dairy"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_legend_protein" />
+
+    <ImageView
+        android:id="@+id/iv_legend_sweets"
+        android:src="@color/colorAccent"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        app:layout_constraintBottom_toTopOf="@id/guide_graph_view_split_2"
+        app:layout_constraintLeft_toRightOf="@id/tv_legend_sweets"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_legend_dairy" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -7,6 +7,15 @@ public class Parent {
     private int id;
     private String token;
     private String name;
+    private int childIndex;
+
+    public int getChildIndex() {
+        return childIndex;
+    }
+
+    public void setChildIndex(int childIndex) {
+        this.childIndex = childIndex;
+    }
 
     public Parent(int id, String name) {
         this.id = id;

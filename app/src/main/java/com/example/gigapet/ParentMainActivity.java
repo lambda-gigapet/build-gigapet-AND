@@ -1,7 +1,5 @@
 package com.example.gigapet;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -94,24 +92,29 @@ public class ParentMainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_parent_main, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.tv_history_time);
-            String fragmentTitle = "default";
-            switch(getArguments().getInt(ARG_SECTION_NUMBER)){
-                case 0:
-                    fragmentTitle = "Daily";
-                    break;
-                case 1:
-                    fragmentTitle = "Daily";
-                    break;
-                case 2:
-                    fragmentTitle = "Weekly";
-                    break;
-                case 3:
-                    fragmentTitle = "Monthly";
-                    break;
-            }
-            textView.setText(fragmentTitle);
+            View rootView;
+            TextView textView;
+            if(getArguments().getInt(ARG_SECTION_NUMBER) != 1) {
+                rootView = inflater.inflate(R.layout.fragment_parent_history, container, false);
+                 textView = (TextView) rootView.findViewById(R.id.tv_history_time);
+
+                String fragmentTitle = "default";
+                switch(getArguments().getInt(ARG_SECTION_NUMBER)){
+                    case 2:
+                        fragmentTitle = "Daily";
+                        break;
+                    case 3:
+                        fragmentTitle = "Weekly";
+                        break;
+                    case 4:
+                        fragmentTitle = "Monthly";
+                        break;
+                }
+                textView.setText(fragmentTitle);
+            } else { rootView = inflater.inflate(R.layout.fragment_parent_food_config, container, false);}
+
+
+
             return rootView;
         }
     }
@@ -136,7 +139,7 @@ public class ParentMainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
     }
 }

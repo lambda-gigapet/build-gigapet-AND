@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:paddingBottom="45dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".75"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".25"/>
+
+
+    <ImageView
+        android:id="@+id/iv_button_fruit_minus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintLeft_toLeftOf="@id/gl_left"
+        app:layout_constraintRight_toLeftOf="@id/iv_fruit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_button_veggie_minus"/>
+
+    <ImageView
+        android:id="@+id/iv_fruit"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@color/colorPrimary"
+        app:layout_constraintLeft_toRightOf="@id/iv_button_fruit_minus"
+        app:layout_constraintRight_toLeftOf="@id/iv_button_fruit_plus"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_veggie"/>
+
+
+    <TextView
+        android:id="@+id/tv_fruit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:padding="2dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:backgroundTint="#222"
+        android:textColor="#fff"
+        app:layout_constraintLeft_toRightOf="@id/iv_button_fruit_minus"
+        app:layout_constraintRight_toLeftOf="@id/iv_button_fruit_plus"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_veggie"/>
+
+    <ImageView
+        android:id="@+id/iv_button_fruit_plus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintLeft_toRightOf="@id/iv_fruit"
+        app:layout_constraintRight_toRightOf="@id/gl_right"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_button_veggie_plus"/>
+
+
+
+    <ImageView
+        android:id="@+id/iv_button_veggie_minus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintLeft_toLeftOf="@id/gl_left"
+        app:layout_constraintRight_toLeftOf="@id/iv_veggie"
+        app:layout_constraintTop_toBottomOf="@id/iv_button_fruit_minus"
+        app:layout_constraintBottom_toTopOf="@id/iv_button_carb_minus"/>
+
+    <ImageView
+        android:id="@+id/iv_veggie"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@color/colorPrimary"
+        app:layout_constraintLeft_toRightOf="@id/iv_button_veggie_minus"
+        app:layout_constraintRight_toLeftOf="@id/iv_button_veggie_plus"
+        app:layout_constraintTop_toBottomOf="@id/iv_fruit"
+        app:layout_constraintBottom_toTopOf="@id/iv_carb"/>
+
+    <TextView
+        android:id="@+id/tv_veggie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:padding="2dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:backgroundTint="#222"
+        android:textColor="#fff"
+        app:layout_constraintLeft_toRightOf="@id/iv_button_veggie_minus"
+        app:layout_constraintRight_toLeftOf="@id/iv_button_veggie_plus"
+        app:layout_constraintTop_toBottomOf="@id/iv_fruit"
+        app:layout_constraintBottom_toTopOf="@id/iv_carb"/>
+
+    <ImageView
+        android:id="@+id/iv_button_veggie_plus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintLeft_toRightOf="@id/iv_veggie"
+        app:layout_constraintRight_toRightOf="@id/gl_right"
+        app:layout_constraintTop_toBottomOf="@id/iv_button_fruit_plus"
+        app:layout_constraintBottom_toTopOf="@id/iv_button_carb_plus"/>
+    <ImageView
+        android:id="@+id/iv_button_carb_minus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintLeft_toLeftOf="@id/gl_left"
+        app:layout_constraintRight_toLeftOf="@id/iv_carb"
+        app:layout_constraintTop_toBottomOf="@id/iv_button_veggie_minus"
+        app:layout_constraintBottom_toTopOf="@id/iv_button_protein_minus"/>
+
+    <ImageView
+        android:id="@+id/iv_carb"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@color/colorPrimary"
+        app:layout_constraintLeft_toRightOf="@id/iv_button_carb_minus"
+        app:layout_constraintRight_toLeftOf="@id/iv_button_carb_plus"
+        app:layout_constraintTop_toBottomOf="@id/iv_veggie"
+        app:layout_constraintBottom_toTopOf="@id/iv_protein"/>
+
+    <TextView
+        android:id="@+id/tv_carb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:padding="2dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:backgroundTint="#222"
+        android:textColor="#fff"
+        app:layout_constraintLeft_toRightOf="@id/iv_button_carb_minus"
+        app:layout_constraintRight_toLeftOf="@id/iv_button_carb_plus"
+        app:layout_constraintTop_toBottomOf="@id/iv_veggie"
+        app:layout_constraintBottom_toTopOf="@id/iv_protein"/>
+
+    <ImageView
+        android:id="@+id/iv_button_carb_plus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintLeft_toRightOf="@id/iv_carb"
+        app:layout_constraintRight_toRightOf="@id/gl_right"
+        app:layout_constraintTop_toBottomOf="@id/iv_button_veggie_plus"
+        app:layout_constraintBottom_toTopOf="@id/iv_button_protein_plus"/>
+
+    <ImageView
+        android:id="@+id/iv_button_protein_minus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintLeft_toLeftOf="@id/gl_left"
+        app:layout_constraintRight_toLeftOf="@id/iv_protein"
+        app:layout_constraintTop_toBottomOf="@id/iv_button_carb_minus"
+        app:layout_constraintBottom_toTopOf="@id/iv_button_dairy_minus"/>
+
+    <ImageView
+        android:id="@+id/iv_protein"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@color/colorPrimary"
+        app:layout_constraintLeft_toRightOf="@id/iv_button_protein_minus"
+        app:layout_constraintRight_toLeftOf="@id/iv_button_protein_plus"
+        app:layout_constraintTop_toBottomOf="@id/iv_carb"
+        app:layout_constraintBottom_toTopOf="@id/iv_dairy"/>
+
+    <TextView
+        android:id="@+id/tv_protein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:padding="2dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:backgroundTint="#222"
+        android:textColor="#fff"
+        app:layout_constraintLeft_toRightOf="@id/iv_button_protein_minus"
+        app:layout_constraintRight_toLeftOf="@id/iv_button_protein_plus"
+        app:layout_constraintTop_toBottomOf="@id/iv_carb"
+        app:layout_constraintBottom_toTopOf="@id/iv_dairy"/>
+
+    <ImageView
+        android:id="@+id/iv_button_protein_plus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintLeft_toRightOf="@id/iv_protein"
+        app:layout_constraintRight_toRightOf="@id/gl_right"
+        app:layout_constraintTop_toBottomOf="@id/iv_button_carb_plus"
+        app:layout_constraintBottom_toTopOf="@id/iv_button_dairy_plus"/>
+
+    <ImageView
+        android:id="@+id/iv_button_dairy_minus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintLeft_toLeftOf="@id/gl_left"
+        app:layout_constraintRight_toLeftOf="@id/iv_dairy"
+        app:layout_constraintTop_toBottomOf="@id/iv_button_protein_minus"
+        app:layout_constraintBottom_toTopOf="@id/iv_button_treat_minus"/>
+
+    <ImageView
+        android:id="@+id/iv_dairy"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@color/colorPrimary"
+        app:layout_constraintLeft_toRightOf="@id/iv_button_dairy_minus"
+        app:layout_constraintRight_toLeftOf="@id/iv_button_dairy_plus"
+        app:layout_constraintTop_toBottomOf="@id/iv_protein"
+        app:layout_constraintBottom_toTopOf="@id/iv_treat"/>
+
+    <TextView
+        android:id="@+id/tv_dairy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:padding="2dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:backgroundTint="#222"
+        android:textColor="#fff"
+        app:layout_constraintLeft_toRightOf="@id/iv_button_dairy_minus"
+        app:layout_constraintRight_toLeftOf="@id/iv_button_dairy_plus"
+        app:layout_constraintTop_toBottomOf="@id/iv_protein"
+        app:layout_constraintBottom_toTopOf="@id/iv_treat"/>
+
+    <ImageView
+        android:id="@+id/iv_button_dairy_plus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintLeft_toRightOf="@id/iv_dairy"
+        app:layout_constraintRight_toRightOf="@id/gl_right"
+        app:layout_constraintTop_toBottomOf="@id/iv_button_protein_plus"
+        app:layout_constraintBottom_toTopOf="@id/iv_button_treat_plus"/>
+
+    <ImageView
+        android:id="@+id/iv_button_treat_minus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintLeft_toLeftOf="@id/gl_left"
+        app:layout_constraintRight_toLeftOf="@id/iv_treat"
+        app:layout_constraintTop_toBottomOf="@id/iv_button_dairy_minus"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_treat"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@color/colorPrimary"
+        app:layout_constraintLeft_toRightOf="@id/iv_button_treat_minus"
+        app:layout_constraintRight_toLeftOf="@id/iv_button_treat_plus"
+        app:layout_constraintTop_toBottomOf="@id/iv_dairy"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_treat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:padding="2dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:backgroundTint="#222"
+        android:textColor="#fff"
+        app:layout_constraintLeft_toRightOf="@id/iv_button_treat_minus"
+        app:layout_constraintRight_toLeftOf="@id/iv_button_treat_plus"
+        app:layout_constraintTop_toBottomOf="@id/iv_dairy"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_button_treat_plus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintLeft_toRightOf="@id/iv_treat"
+        app:layout_constraintRight_toRightOf="@id/gl_right"
+        app:layout_constraintTop_toBottomOf="@id/iv_button_dairy_plus"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
