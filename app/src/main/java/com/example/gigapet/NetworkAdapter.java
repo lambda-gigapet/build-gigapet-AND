@@ -1,5 +1,7 @@
 package com.example.gigapet;
 
+import android.util.JsonReader;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -30,6 +32,10 @@ public class NetworkAdapter {
 
     static String httpRequest(String urlString, String requestMethod) {
         return httpRequest(urlString, requestMethod, null, null);
+    }
+
+    static String httpRequest(String urlString, String requestMethod, JSONObject requestBody) {
+        return httpRequest(urlString, requestMethod, requestBody, null);
     }
 
     static String httpRequest(String urlString, String requestMethod, JSONObject requestBody, Map<String, String> headerProperties) {

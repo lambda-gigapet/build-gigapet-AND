@@ -17,9 +17,10 @@ public class Parent {
         this.childIndex = childIndex;
     }
 
-    public Parent(int id, String name) {
+    public Parent(int id, String token) {
         this.id = id;
-        this.name = name;
+        this.token = token;
+        children = new ArrayList<>();
     }
 
     public void addChild(Child child){
@@ -28,10 +29,6 @@ public class Parent {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public ArrayList<Child> getChildren() {
