@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
     android:paddingBottom="45dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context=".ParentMainActivity$PlaceholderFragment">
 
 
     <android.support.constraint.Guideline
@@ -12,14 +14,14 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent=".75"/>
+        app:layout_constraintGuide_percent="0.61" />
 
     <android.support.constraint.Guideline
         android:id="@+id/gl_left"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent=".25"/>
+        app:layout_constraintGuide_percent="0.09" />
 
 
     <ImageView
@@ -29,7 +31,7 @@
         android:src="@color/colorAccent"
         app:layout_constraintLeft_toLeftOf="@id/gl_left"
         app:layout_constraintRight_toLeftOf="@id/iv_fruit"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner_child_select"
         app:layout_constraintBottom_toTopOf="@id/iv_button_veggie_minus"/>
 
     <ImageView
@@ -39,7 +41,7 @@
         android:src="@color/colorPrimary"
         app:layout_constraintLeft_toRightOf="@id/iv_button_fruit_minus"
         app:layout_constraintRight_toLeftOf="@id/iv_button_fruit_plus"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner_child_select"
         app:layout_constraintBottom_toTopOf="@id/iv_veggie"/>
 
 
@@ -55,7 +57,7 @@
         android:textColor="#fff"
         app:layout_constraintLeft_toRightOf="@id/iv_button_fruit_minus"
         app:layout_constraintRight_toLeftOf="@id/iv_button_fruit_plus"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner_child_select"
         app:layout_constraintBottom_toTopOf="@id/iv_veggie"/>
 
     <ImageView
@@ -65,7 +67,7 @@
         android:src="@color/colorAccent"
         app:layout_constraintLeft_toRightOf="@id/iv_fruit"
         app:layout_constraintRight_toRightOf="@id/gl_right"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner_child_select"
         app:layout_constraintBottom_toTopOf="@id/iv_button_veggie_plus"/>
 
 
@@ -293,5 +295,33 @@
         app:layout_constraintRight_toRightOf="@id/gl_right"
         app:layout_constraintTop_toBottomOf="@id/iv_button_dairy_plus"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_food_config_title"
+        android:textSize="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Food"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner_meal_type_food_config"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_food_config_title"
+        app:layout_constraintLeft_toRightOf="@id/gl_right"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner_child_select"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_food_config_title"
+        app:layout_constraintLeft_toRightOf="@id/gl_left"
+        app:layout_constraintRight_toLeftOf="@id/gl_right" />
 
 </android.support.constraint.ConstraintLayout>

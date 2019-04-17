@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class ParentMainActivity extends AppCompatActivity {
@@ -68,6 +70,8 @@ public class ParentMainActivity extends AppCompatActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+        Spinner spinnerMeals;
+        Spinner spinnerChildrenNames;
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -92,14 +96,18 @@ public class ParentMainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
+
             View rootView;
             TextView textView;
-            if(getArguments().getInt(ARG_SECTION_NUMBER) != 1) {
+            if (getArguments().getInt(ARG_SECTION_NUMBER) != 1) {
+
                 rootView = inflater.inflate(R.layout.fragment_parent_history, container, false);
-                 textView = (TextView) rootView.findViewById(R.id.tv_history_time);
+
+                textView = (TextView) rootView.findViewById(R.id.tv_history_time);
 
                 String fragmentTitle = "default";
-                switch(getArguments().getInt(ARG_SECTION_NUMBER)){
+                switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                     case 2:
                         fragmentTitle = "Daily";
                         break;
@@ -111,8 +119,16 @@ public class ParentMainActivity extends AppCompatActivity {
                         break;
                 }
                 textView.setText(fragmentTitle);
-            } else { rootView = inflater.inflate(R.layout.fragment_parent_food_config, container, false);}
-
+            } else {
+                rootView = inflater.inflate(R.layout.fragment_parent_food_config, container, false);
+                spinnerMeals = rootView.findViewById(R.id.spinner_meal_type);
+                spinnerMeals = rootView.findViewById(R.id.spinner_meal_type_food_config);
+                String[] namesArr = {"Steve", "Mandy", "Sarah"};
+                ArrayAdapter<String> spinnerChildrenArrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,namesArr);
+                spinnerChildrenArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerChildrenNames = rootView.findViewById(R.id.spinner_child_select);
+                spinnerChildrenNames.setAdapter(spinnerChildrenArrayAdapter);
+            }
 
 
             return rootView;
