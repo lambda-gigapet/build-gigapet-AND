@@ -3,55 +3,59 @@ package com.example.gigapet;
 import java.util.ArrayList;
 
 public class Parent {
-    private ArrayList<Child> children;
-    private int id;
-    private String token;
-    private String name;
-    private int childIndex;
+    private static  int id;
+    private static String token;
+    private static String name;
+    private static int currentChildIndex;
 
-    public int getChildIndex() {
-        return childIndex;
+
+    public static int getChildIndex() {
+        return currentChildIndex;
     }
 
-    public void setChildIndex(int childIndex) {
-        this.childIndex = childIndex;
+    public static void setChildIndex(int childIndex) {
+        currentChildIndex = childIndex;
     }
 
     public Parent(int id, String token) {
         this.id = id;
         this.token = token;
-        children = new ArrayList<>();
+        //TODO: load children from database
+        ChildDao.addChild(new Child("SteveJr",1));
+        currentChildIndex = 1;
     }
 
-    public void addChild(Child child){
-        children.add(child);
+
+
+    public static String[] getChildrensNamesAsArray() {
+
+        ArrayList<Child> children = ChildDao.getChildren();
+
+        String[] names = new String[children.size()];
+        for(int i = 0; i < children.size(); i++){
+            names[i] = children.get(i).getName();
+        }
+        return names;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public static void setId(int newId) {
+        id = newId;
     }
 
-    public ArrayList<Child> getChildren() {
-        return children;
-    }
-
-    public int getId() {
+    public static int getId() {
         return id;
     }
 
-    public String getToken() {
+    public static String getToken() {
         return token;
     }
 
-    public String getName() {
+    public static String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public static void setName(String newName) {
+        name = newName;
     }
 
-    public void removeChild(int position){
-        children.remove(position);
-    }
 }

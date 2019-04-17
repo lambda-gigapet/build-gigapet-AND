@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@id/section_label" />
 
     <Spinner
-        android:id="@+id/tv_child_name"
+        android:id="@+id/spinner_child_select_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -136,19 +136,19 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Dairy"
-        app:layout_constraintBottom_toTopOf="@id/tv_legend_sweets"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_treats"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_legend_dairy"
         app:layout_constraintTop_toBottomOf="@id/tv_legend_protein" />
 
     <TextView
-        android:id="@+id/tv_legend_sweets"
+        android:id="@+id/tv_legend_treats"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Sweets"
+        android:text="Treats"
         app:layout_constraintBottom_toTopOf="@id/guide_graph_view_split_2"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
-        app:layout_constraintRight_toLeftOf="@id/iv_legend_sweets"
+        app:layout_constraintRight_toLeftOf="@id/iv_legend_treats"
         app:layout_constraintTop_toBottomOf="@id/tv_legend_dairy" />
 
     <ImageView
@@ -196,18 +196,18 @@
         android:src="@color/colorAccent"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        app:layout_constraintBottom_toTopOf="@id/tv_legend_sweets"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_treats"
         app:layout_constraintLeft_toRightOf="@id/tv_legend_dairy"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_legend_protein" />
 
     <ImageView
-        android:id="@+id/iv_legend_sweets"
+        android:id="@+id/iv_legend_treats"
         android:src="@color/colorAccent"
         android:layout_width="15dp"
         android:layout_height="15dp"
         app:layout_constraintBottom_toTopOf="@id/guide_graph_view_split_2"
-        app:layout_constraintLeft_toRightOf="@id/tv_legend_sweets"
+        app:layout_constraintLeft_toRightOf="@id/tv_legend_treats"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_legend_dairy" />
 
