@@ -4,17 +4,10 @@ import java.util.ArrayList;
 
 public class ChildRepo {
     private static ArrayList<Child> children = new ArrayList<>();
-    private static int currentChildId;
 
     public ChildRepo(ArrayList<Child> children) {
         this.children = children;
-        currentChildId = -1;
     }
-
-    public static void setCurrentChildById(int id){
-        currentChildId = id;
-    }
-
 
     public static void addChild(Child child){
         children.add(child);
@@ -29,7 +22,17 @@ public class ChildRepo {
         return null;
     }
 
-    public static int getCurrentChildId() {
-        return currentChildId;
+    public static ArrayList<Child> getChildren() {
+    return children;
     }
+
+   public static int getHighestId(){
+        int result = 0;
+       for (Child child:children) {
+           if(child.getId() > result){
+               result = child.getId();
+           }
+       }
+       return result;
+   }
 }

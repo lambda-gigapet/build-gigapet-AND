@@ -29,12 +29,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -43,18 +46,9 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -75,13 +69,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = findViewById(R.id.email);
         populateAutoComplete();
 
         mUsernameView = findViewById(R.id.username);
         mNameView = findViewById(R.id.name);
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -94,14 +88,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
 
-        final Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        final Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(getApplicationContext(), GigapetMainActivity.class);
-                startActivity(intent);
-                //attemptLogin();
+                //Intent intent = new Intent(getApplicationContext(), GigapetMainActivity.class);
+                //startActivity(intent);
+                attemptLogin();
             }
         });
 
@@ -110,7 +103,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mRegisterFinalizeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
         final Button mRegisterButton = findViewById(R.id.register_button);
@@ -120,7 +112,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View v) {
                 mRegisterButton.setVisibility(View.VISIBLE);
-                mUsernameView.setVisibility(View.GONE);
+                mEmailView.setVisibility(View.GONE);
                 mNameView.setVisibility(View.GONE);
                 mRegisterFinalizeButton.setVisibility(View.GONE);
                 mEmailSignInButton.setVisibility(View.VISIBLE);
@@ -133,13 +125,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View v) {
                 mRegisterButton.setVisibility(View.GONE);
-                mUsernameView.setVisibility(View.VISIBLE);
+                mEmailView.setVisibility(View.VISIBLE);
                 mNameView.setVisibility(View.VISIBLE);
                 mRegisterFinalizeButton.setVisibility(View.VISIBLE);
                 mEmailSignInButton.setVisibility(View.GONE);
                 mBackToLogin.setVisibility(View.VISIBLE);
 
-               // attemptRegister();
+                // attemptRegister();
             }
         });
 
@@ -151,7 +143,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (!mayRequestContacts()) {
             return;
         }
-
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -191,11 +182,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
@@ -206,7 +192,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -219,16 +205,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -238,7 +214,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(username, password);
             mAuthTask.execute((Void) null);
         }
     }
@@ -247,7 +223,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (mAuthTask != null) {
             return;
         }
-
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -418,13 +393,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String mUsername;
         private final String mPassword;
         private int id;
         private String token;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
+        UserLoginTask(String username, String password) {
+            mUsername = username;
             mPassword = password;
             token = "";
             id = -1;
@@ -436,14 +411,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             try {
                 JSONObject requestBody = new JSONObject(
-                        ",\"email\":" + mEmail
-                        + ",\"password\":" + mPassword + "}");
+                        "{\"username\":" + mUsername
+                                + ",\"password\":" + mPassword + "}");
 
-                JSONObject jsonObject = new JSONObject(NetworkAdapter.httpRequest(GigapetDao.getLoginUrl(), NetworkAdapter.POST, requestBody));
+                String response = NetworkAdapter.httpRequest(GigapetDao.getLoginUrl(), NetworkAdapter.POST, requestBody, getHeaders());
+                JSONObject jsonObject = new JSONObject();
+                if (jsonObject == null) {
+                    onBackPressed();
+                }
+                jsonObject = new JSONObject(response);
                 Thread.sleep(2000);
                 token = jsonObject.getString("token");
                 id = jsonObject.getInt("id");
 
+
+                if (token != "" && id != -1) {
+                    parent = new Parent(id, token);
+                    Intent intent = new Intent(getApplicationContext(), GigapetMainActivity.class);
+                    startActivity(intent);
+                }
                 parent = new Parent(id, token);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -451,16 +437,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
             // TODO: register the new account here.
             return true;
+        }
+
+        public Map<String, String> getHeaders() {
+            Map<String, String> headerParams = new HashMap<String, String>();
+            headerParams.put("Content-Type", "application/json");
+            return headerParams;
         }
 
         @Override
@@ -505,17 +489,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             try {
                 JSONObject requestBody = new JSONObject(
-                               "{\"name\":" + mName
+                        "{\"name\":" + mName
                                 + ",\"email\":" + mEmail
                                 + ",\"username\":" + mUsername
                                 + ",\"password\":" + mPassword + "}");
 
-                JSONObject jsonObject = new JSONObject(NetworkAdapter.httpRequest(GigapetDao.getRegisterUrl(), NetworkAdapter.POST, requestBody));
+                JSONObject jsonObject;
+                jsonObject = new JSONObject(NetworkAdapter.httpRequest(GigapetDao.getRegisterUrl(), NetworkAdapter.POST, requestBody));
+                if (jsonObject == null) {
+                    onBackPressed();
+                }
                 Thread.sleep(2000);
                 token = jsonObject.getString("token");
                 id = jsonObject.getInt("id");
 
-                parent = new Parent(id, token);
+
             } catch (InterruptedException e) {
                 return false;
             } catch (JSONException e) {

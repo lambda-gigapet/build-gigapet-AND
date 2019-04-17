@@ -22,11 +22,9 @@ public class GigapetDao {
         return Constants.CHILD_URL;
     }
 
-    public static Gigapet getCurrentGigapet() {
-        return GigapetRepo.getCurrentGigapet();
+
+    public static void addGigapetToCurrentChild(int id, Gigapet gigapet) {
     }
 
-    public static void addGigapet(Gigapet gigapet) {
-        GigapetRepo.addGigapet(gigapet);
-    }
+
 }

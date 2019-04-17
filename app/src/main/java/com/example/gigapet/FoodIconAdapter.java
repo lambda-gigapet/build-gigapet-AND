@@ -75,7 +75,7 @@ public class FoodIconAdapter extends RecyclerView.Adapter<FoodIconAdapter.ViewHo
             public void onClick(View v) {
                 if (ChildDao.getCurrentChild().getFoodById(position) > 0) {
                     ChildDao.getCurrentChild().removeFood(position, 1);
-                    GigapetDao.getCurrentGigapet().feed(position);
+                    ChildDao.getCurrentChild().getGigapet().feed(position);
                     notifyDataSetChanged();
                 }
             }

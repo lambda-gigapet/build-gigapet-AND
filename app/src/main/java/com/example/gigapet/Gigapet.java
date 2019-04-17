@@ -2,15 +2,14 @@ package com.example.gigapet;
 
 public class Gigapet {
     private String name;
-    private String uniqueId;
+    private int id;
     private int state;
     private int exp;
-    private int repoId;
     private int[] imageResource;
 
-    public Gigapet(String name, String uniqueId) {
+    public Gigapet(String name, int id) {
         this.name = name;
-        this.uniqueId = uniqueId;
+        this.id = id;
     }
 
     public void feed(int foodType){
@@ -47,10 +46,6 @@ public class Gigapet {
         this.exp = exp;
     }
 
-    public void setRepoId(int repoId) {
-        this.repoId = repoId;
-    }
-
     public void setImageResource(int[] imageResource) {
         this.imageResource = imageResource;
     }
@@ -59,16 +54,8 @@ public class Gigapet {
         return name;
     }
 
-    public String getUniqueId() {
-        return uniqueId;
-    }
-
     public int getExp() {
         return exp;
-    }
-
-    public int getRepoId() {
-        return repoId;
     }
 
     public int[] getImageResource() {
