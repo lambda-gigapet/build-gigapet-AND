@@ -13,6 +13,32 @@ public class Gigapet {
         this.uniqueId = uniqueId;
     }
 
+    public void feed(int foodType){
+        switch (foodType){
+            case 1: eatHealthyFood();
+                break;
+            case 2: eatHealthyFood();
+                break;
+            case 3: eatHealthyFood();
+                break;
+            case 4: eatHealthyFood();
+                break;
+            case 5: eatHealthyFood();
+                break;
+            case 6: eatSweets();
+                break;
+        }
+
+    }
+
+    private void eatHealthyFood(){
+
+    }
+
+    private void eatSweets(){
+
+    }
+
     public void setName(String name) {
         this.name = name;
     }

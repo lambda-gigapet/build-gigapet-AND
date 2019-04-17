@@ -1,29 +1,32 @@
 package com.example.gigapet;
 
 public class GigapetDao {
-    private static String BASE_URL = "https://lambda-gigapet.herokuapp.com/";
-    private static String PET_URL = BASE_URL + "api/pet";
-    private static String REGISTER_URL = BASE_URL + "api/auth/register";
-    private static String LOGIN_URL = BASE_URL + "api/auth/login";
-    private static String CHILD_URL = BASE_URL + "api/child/%d";
 
     public static String getBaseUrl() {
-        return BASE_URL;
+        return Constants.BASE_URL;
     }
 
     public static String getPetUrl() {
-        return PET_URL;
+        return Constants.PET_URL;
     }
 
     public static String getRegisterUrl() {
-        return REGISTER_URL;
+        return Constants.REGISTER_URL;
     }
 
     public static String getLoginUrl() {
-        return LOGIN_URL;
+        return Constants.LOGIN_URL;
     }
 
     public static String getChildUrl() {
-        return CHILD_URL;
+        return Constants.CHILD_URL;
+    }
+
+    public static Gigapet getCurrentGigapet() {
+        return GigapetRepo.getCurrentGigapet();
+    }
+
+    public static void addGigapet(Gigapet gigapet) {
+        GigapetRepo.addGigapet(gigapet);
     }
 }
