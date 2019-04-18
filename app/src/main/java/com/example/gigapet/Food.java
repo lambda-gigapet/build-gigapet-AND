@@ -11,12 +11,13 @@ public class Food {
     private String dateUpdated;
     private int childId;
 
-
+    public Food(String category, String meal, int quantity, int childId){
+        this(1,"name", quantity, meal, category, "2019--04-15", "2019--04-16", childId);
+    }
 
     public Food(int id, String name, int quantity, String meal, String category, String dateAdded, int childId) {
         this(id,name,quantity,meal,category,dateAdded,dateAdded,childId);
     }
-
     public Food(int id, String name, int quantity, String meal, String category, String dateAdded, String dateUpdated, int childId) {
         this.id = id;
         this.name = name;

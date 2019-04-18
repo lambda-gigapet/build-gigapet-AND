@@ -1,28 +1,97 @@
 package com.example.gigapet;
 
+import android.arch.lifecycle.ViewModelProvider;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+
 public class GigapetDao {
 
-    public static String getBaseUrl() {
-        return Constants.BASE_URL;
-    }
+    public static void loadGigapets() {
 
-    public static String getPetUrl() {
-        return Constants.PET_URL;
-    }
+        int petId = 0;
+        String species = "";
+        String description = "";
+        String happyUrl = "";
+        String okUrl = "";
+        String sadUrl = "";
+        String sickUrl = "";
+        String eatingUrl = "";
 
-    public static String getRegisterUrl() {
-        return Constants.REGISTER_URL;
-    }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String results = NetworkAdapter.httpRequest(Constants.PET_URL, NetworkAdapter.GET, Constants.getHeaders());
+                try {
+                    int petId = 0;
+                    String species = "";
+                    String description = "";
+                    String happyUrl = "";
+                    String okUrl = "";
+                    String sadUrl = "";
+                    String sickUrl = "";
+                    String eatingUrl = "";
 
-    public static String getLoginUrl() {
-        return Constants.LOGIN_URL;
-    }
+                    ArrayList<Gigapet> loadPets = new ArrayList<Gigapet>();
 
-    public static String getChildUrl() {
-        return Constants.CHILD_URL;
-    }
+                    JSONArray jsonArray = new JSONArray(results);
 
-    public static void addGigapetToCurrentChild(int id, Gigapet gigapet) {
+                    for (int i = 0; i < jsonArray.length(); ++i) {
+                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                        try {
+                            petId = jsonObject.getInt("id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            species = jsonObject.getString("species");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            description = jsonObject.getString("description");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            happyUrl = jsonObject.getString("happy");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            okUrl = jsonObject.getString("ok");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            sadUrl = jsonObject.getString("sad");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            sickUrl = jsonObject.getString("sick");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            eatingUrl = jsonObject.getString("eating");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        loadPets.add(new Gigapet(petId,species,description,happyUrl,okUrl,sadUrl,sickUrl,eatingUrl));
+                    }
+                    GigapetRepo.addPetArr(loadPets);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
     }
 
 

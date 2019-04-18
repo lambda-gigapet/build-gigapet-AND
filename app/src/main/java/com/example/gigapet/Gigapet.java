@@ -4,6 +4,8 @@ public class Gigapet {
     private String name;
     private int id;
     private int exp;
+    private String description;
+    private String species;
     private String happyImg;
     private String okImg;
     private String sadImg;
@@ -16,6 +18,17 @@ public class Gigapet {
         this.exp = 0;
     }
 
+    public Gigapet(int petId,String species,String description,String happyUrl,String okUrl,String sadUrl,String sickUrl,String eatingUrl){
+        this.id = petId;
+        this.species = species;
+        this.description = description;
+        this.happyImg = happyUrl;
+        this.okImg = okUrl;
+        this.sadImg = sadUrl;
+        this.sickImg = sickUrl;
+        this.eatingImg = eatingUrl;
+    }
+
     public Gigapet(String name, int exp, int id, String happyImg, String okImg, String sadImg, String sickImg, String eatingImg) {
         this.name = name;
         this.id = id;
@@ -26,6 +39,8 @@ public class Gigapet {
         this.sickImg = sickImg;
         this.eatingImg = eatingImg;
     }
+
+
 
     public void feed(int foodType) {
         switch (foodType) {

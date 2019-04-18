@@ -20,6 +20,10 @@ public class FoodRepo {
         return null;
     }
 
+    public static void addFoodList(ArrayList<Food> foods) {
+        foods.addAll(foods);
+    }
+
     public void addFoodArr(ArrayList<Food> addedFoods){
         foods.addAll(addedFoods);
     }

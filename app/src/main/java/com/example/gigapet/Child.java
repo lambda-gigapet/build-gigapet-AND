@@ -18,6 +18,17 @@ public class Child {
         this.id = id;
         this.gigapet = gigapet;
         foodIntArr = new int[6];
+       // getFoodFromDb();
+    }
+
+    public void getFoodFromDb(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ChildDao.LoadFoodEntries();
+            }
+        }).start();
+
     }
 
     public void setGigapet(Gigapet gigapet) {

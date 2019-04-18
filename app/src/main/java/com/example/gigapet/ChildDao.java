@@ -27,7 +27,7 @@ public class ChildDao {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        NetworkAdapter.httpRequest(String.format(Constants.ADD_CHILD_URL, Constants.prefs.getInt("parent_id", 0)), NetworkAdapter.POST, requestBody, getHeaders());
+        NetworkAdapter.httpRequest(String.format(Constants.ADD_CHILD_URL, Constants.prefs.getInt("parent_id", 0)), NetworkAdapter.POST, requestBody, Constants.getHeaders());
     }
 
     public static JSONObject getFoodHistory(int mealType, int childPos) {
@@ -56,7 +56,7 @@ public class ChildDao {
     }
 
     public static void removeChild(int pos) {
-        NetworkAdapter.httpRequest(Constants.CHILD_URL + "/" + String.valueOf(pos) + "/", NetworkAdapter.DELETE, getHeaders());
+        NetworkAdapter.httpRequest(Constants.CHILD_URL + "/" + String.valueOf(pos) + "/", NetworkAdapter.DELETE, Constants.getHeaders());
     }
 
     public static void importChildrenFromDb() {
@@ -77,7 +77,7 @@ public class ChildDao {
                 Constants.PARENT_URL
                         + String.valueOf(
                         Parent.getId()),
-                NetworkAdapter.GET, getHeaders());
+                NetworkAdapter.GET, Constants.getHeaders());
 
         try {
             jsonObject = new JSONObject(result);
@@ -168,12 +168,6 @@ public class ChildDao {
         }
     }
 
-    public static Map<String, String> getHeaders() {
-        Map<String, String> params = new HashMap<>();
-        params.put("Authorization", Constants.prefs.getString("token", "default"));
-        params.put("Content-Type", "application/json");
-        return params;
-    }
 
     public static void setCurrentChildId(int id) {
         ChildRepo.setCurrentChildById(id);
@@ -183,27 +177,44 @@ public class ChildDao {
         return ChildRepo.getChildByName(childrenName);
     }
 
-/*    public static int[] getFoodEntriesTimeSpan(String timeSpan) {
+    public static void LoadFoodEntries() {
         int[] entries = new int[6];
-        ArrayList<Food>  foods = new ArrayList<>();
-        String result = NetworkAdapter.httpRequest(String.format(Constants.FOOD_ENTRIES_ID_TIME, ChildDao.getCurrentChild().getId(), timeSpan), NetworkAdapter.GET, getHeaders());
+        ArrayList<Food> foods = new ArrayList<>();
+
+        int id = 0;
+        String name = "";
+        int quantity = 0;
+        String meal = "";
+        String category = "";
+        String dateAdded = "";
+        String dateUpdated = "";
+        int childId = 0;
+
+
+        String result = NetworkAdapter.httpRequest(String.format(Constants.FOOD_ENTRIES_ID_TIME, ChildDao.getCurrentChild().getId()), NetworkAdapter.GET, Constants.getHeaders());
 
         try {
-            JSONObject jsonObject = new JSONObject(result);
+            JSONArray jsonArray = new JSONArray(result);
+            JSONObject jsonObject = new JSONObject();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                jsonObject = jsonArray.getJSONObject(i);
 
-            try {
-                for (int i = 0; i < entries.length; i++) {
-                    JSONArray jsonArray = new JSONArray();
-                    //TODO: wait for backend restructure
-                }
+                id = jsonObject.getInt("id");
+                name = jsonObject.getString("name");
+                quantity = jsonObject.getInt("quantity");
+                meal = jsonObject.getString("meal");
+                category = jsonObject.getString("category");
+                dateAdded = jsonObject.getString("date_added");
+                dateUpdated = jsonObject.getString("date_updated");
+                childId = jsonObject.getInt("child_id");
 
-            } catch (JSONException e) {
-                e.printStackTrace();
+                foods.add(new Food(id,name,quantity,meal,category,dateAdded,dateUpdated,childId));
             }
-            return null;
+
+            FoodRepo.addFoodList(foods);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-    }*/
+    }
 }

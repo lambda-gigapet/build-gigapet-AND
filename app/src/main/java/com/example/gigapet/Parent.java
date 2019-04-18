@@ -23,6 +23,7 @@ public class Parent {
         this.token = token;
         this.mealIndex = 1;
         loadChildren();
+        GigapetDao.loadGigapets();
         ChildDao.setCurrentChildId(ChildDao.getChildren().get(ChildDao.getChildren().size()-1).getId());
     }
     public static void loadChildren(){

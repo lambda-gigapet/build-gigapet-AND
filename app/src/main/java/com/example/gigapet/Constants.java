@@ -3,6 +3,9 @@ package com.example.gigapet;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class Constants {
@@ -34,13 +37,20 @@ public class Constants {
     public static String CHILD_URL = BASE_URL + "api/child";
     public static String PARENT_URL = BASE_URL + "api/parent/";
     public static String PARENT_ENDING = "api/parent/";
-    public static String FOOD_ENTRIES_UPDATE_URL = BASE_URL + CHILD_URL + "time-span=%s";
+    public static String FOOD_ENTRIES_UPDATE_URL = BASE_URL + CHILD_URL + "/%d";
     public static String FOOD_ENTRIES_ID_TIME = BASE_URL + CHILD_URL + "/%d/entries?time-span=%s";
     public static final String ADD_CHILD_URL = BASE_URL + PARENT_ENDING + "%d" + "/child";
 
     public static void setSharedPrefs(Context context){
         prefs = context.getSharedPreferences("MyPref", MODE_PRIVATE);
         editor = prefs.edit();
+    }
+
+    public static Map<String, String> getHeaders() {
+        Map<String, String> params = new HashMap<>();
+        params.put("Authorization", Constants.prefs.getString("token", "default"));
+        params.put("Content-Type", "application/json");
+        return params;
     }
 
 

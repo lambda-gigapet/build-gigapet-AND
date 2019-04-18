@@ -429,7 +429,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         "{\"username\":" + mUsername
                                 + ",\"password\":" + mPassword + "}");
 
-                String response = NetworkAdapter.httpRequest(GigapetDao.getLoginUrl(), NetworkAdapter.POST, requestBody, getHeaders());
+                String response = NetworkAdapter.httpRequest(Constants.LOGIN_URL, NetworkAdapter.POST, requestBody, getHeaders());
                 JSONObject jsonObject = new JSONObject();
                 if (jsonObject == null) {
                     onBackPressed();
