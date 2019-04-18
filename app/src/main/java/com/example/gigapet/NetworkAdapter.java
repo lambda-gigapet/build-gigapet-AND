@@ -29,6 +29,9 @@ public class NetworkAdapter {
     static String httpRequest(String urlString) {
         return httpRequest(urlString, GET, null, null);
     }
+    static String httpRequest(String urlString, String requestMethod, Map<String,String> headerProperties) {
+        return httpRequest(urlString, requestMethod, null, headerProperties);
+    }
 
     static String httpRequest(String urlString, String requestMethod) {
         return httpRequest(urlString, requestMethod, null, null);

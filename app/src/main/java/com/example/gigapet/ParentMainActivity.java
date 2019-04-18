@@ -102,7 +102,7 @@ public class ParentMainActivity extends AppCompatActivity {
         WeeklyHistoryFragment fragment = new WeeklyHistoryFragment();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, fragment)
+                .replace(R.id.container, fragment)
                 .commit();
     }
 
@@ -114,7 +114,7 @@ public class ParentMainActivity extends AppCompatActivity {
         MonthlyHistoryFragment fragment = new MonthlyHistoryFragment();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, fragment)
+                .replace(R.id.container, fragment)
                 .commit();
     }
 
@@ -126,7 +126,7 @@ public class ParentMainActivity extends AppCompatActivity {
         DailyHistoryFragment fragment = new DailyHistoryFragment();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, fragment)
+                .replace(R.id.container, fragment)
                 .commit();
     }
 
@@ -138,7 +138,7 @@ public class ParentMainActivity extends AppCompatActivity {
         AddFoodFragment fragment = new AddFoodFragment();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, fragment)
+                .replace(R.id.container, fragment)
                 .commit();
     }
 
@@ -150,7 +150,7 @@ public class ParentMainActivity extends AppCompatActivity {
         SelectChildFragment fragment = new SelectChildFragment();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, fragment)
+                .replace(R.id.container, fragment)
                 .commit();
     }
 
@@ -162,7 +162,7 @@ public class ParentMainActivity extends AppCompatActivity {
         RemoveChildFragment fragment = new RemoveChildFragment();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, fragment)
+                .replace(R.id.container, fragment)
                 .commit();
     }
 
@@ -306,6 +306,9 @@ public class ParentMainActivity extends AppCompatActivity {
         public static final String ARG_ITEM_ID = "item_id";
         AddFoodListAdapter listAdapter;
         RecyclerView recyclerView;
+        Button btnMealBreakfast ;
+        Button btnMealLunch ;
+        Button btnMealDinner ;
 
         public AddFoodFragment() {
         }
@@ -314,12 +317,46 @@ public class ParentMainActivity extends AppCompatActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
         }
 
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_parent_food_config, container, false);
+            btnMealBreakfast = rootView.findViewById(R.id.meal_type_breakfast);
+            btnMealLunch = rootView.findViewById(R.id.meal_type_lunch);
+            btnMealDinner = rootView.findViewById(R.id.meal_type_dinner);
+
+            btnMealBreakfast.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnMealBreakfast.setBackgroundResource(R.color.colorAccent);
+                    btnMealLunch.setBackgroundResource(R.color.colorPrimary);
+                    btnMealDinner.setBackgroundResource(R.color.colorPrimary);
+                    Parent.setMealIndex(Constants.MEAL_TYPE_BREAKFAST);
+                }
+            });
+
+            btnMealLunch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnMealBreakfast.setBackgroundResource(R.color.colorPrimary);
+                    btnMealLunch.setBackgroundResource(R.color.colorAccent);
+                    btnMealDinner.setBackgroundResource(R.color.colorPrimary);
+                    Parent.setMealIndex(Constants.MEAL_TYPE_LUNCH);
+                }
+            });
+
+            btnMealDinner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnMealBreakfast.setBackgroundResource(R.color.colorPrimary);
+                    btnMealLunch.setBackgroundResource(R.color.colorPrimary);
+                    btnMealDinner.setBackgroundResource(R.color.colorAccent);
+                    Parent.setMealIndex(Constants.MEAL_TYPE_DINNER);
+                }
+            });
             graphView = rootView.findViewById(R.id.gv_line_graph);
             recyclerView = rootView.findViewById(R.id.recycler_view_parent_add_food);
             recyclerView.setHasFixedSize(true);
@@ -410,6 +447,8 @@ public class ParentMainActivity extends AppCompatActivity {
 
     public static class AddChildFragment extends Fragment {
         public static final String ARG_ITEM_ID = "item_id";
+        Button btnAddChild;
+        EditText etAddChild;
 
         public AddChildFragment() {
         }
@@ -424,6 +463,15 @@ public class ParentMainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_add_child, container, false);
+            btnAddChild = rootView.findViewById(R.id.button_add_child_fragment);
+            etAddChild = rootView.findViewById(R.id.et_add_child_fragment);
+
+            btnAddChild.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ChildDao.addChild(new Child(etAddChild.getText().toString(),ChildDao.getHighestId()+1));
+                }
+            });
             return rootView;
         }
     }

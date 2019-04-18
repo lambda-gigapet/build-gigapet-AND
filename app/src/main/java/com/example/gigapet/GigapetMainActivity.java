@@ -8,6 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
 public class GigapetMainActivity extends AppCompatActivity {
 
 
@@ -43,18 +47,8 @@ public class GigapetMainActivity extends AppCompatActivity {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String response;
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                }).start();
-
-                //Intent intent = new Intent(getApplicationContext(), ParentMainActivity.class);
-               // startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), ParentMainActivity.class);
+               startActivity(intent);
             }
         });
         checkForSweets();
@@ -66,8 +60,12 @@ public class GigapetMainActivity extends AppCompatActivity {
                 checkForSweets();
             }
         });
+    }
 
-
+    public Map<String,String> getHeaders(){
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("Authorization", Constants.prefs.getString("token", "default"));
+        return params;
     }
 
     private void checkForSweets(){

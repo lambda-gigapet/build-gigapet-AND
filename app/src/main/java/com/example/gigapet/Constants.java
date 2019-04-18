@@ -29,11 +29,15 @@ public class Constants {
     public static String PET_URL = BASE_URL + "api/pet";
     public static String REGISTER_URL = BASE_URL + "api/auth/register";
     public static String LOGIN_URL = BASE_URL + "api/auth/login";
-    public static String CHILD_URL = BASE_URL + "api/child/%d";
+    public static String CHILD_URL = BASE_URL + "api/child/";
+    public static String PARENT_URL = BASE_URL + "api/parent/";
+    public static String FOOD_ENTRIES_UPDATE_URL = BASE_URL + CHILD_URL + "time-span=%s";
 
 
     public static void setSharedPrefs(Context context){
         prefs = context.getSharedPreferences("MyPref", MODE_PRIVATE);
         editor = prefs.edit();
     }
+
+
 }

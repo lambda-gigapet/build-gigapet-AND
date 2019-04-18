@@ -29,7 +29,7 @@ public class SelectChildListAdapter extends RecyclerView.Adapter<SelectChildList
         viewHolder.vParentView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Parent.setCurrentChildIndex(i);
+                ChildDao.setCurrentChildId(ChildDao.getChildren().get(i).getId());
                 notifyDataSetChanged();
             }
         });

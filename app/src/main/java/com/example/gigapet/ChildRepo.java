@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 public class ChildRepo {
     private static ArrayList<Child> children = new ArrayList<>();
+    private static int currentChildId;
 
     public ChildRepo(ArrayList<Child> children) {
         this.children = children;
+        currentChildId = 0;
     }
 
     public static void addChild(Child child){
@@ -48,5 +50,34 @@ public class ChildRepo {
 
     public static void removeChild(int pos) {
         children.remove(pos);
+    }
+
+    public static void removeAllChildren() {
+        children.clear();
+    }
+
+    public static void setCurrentChildById(int id) {
+        currentChildId = id;
+    }
+
+    public static void setChildren(ArrayList<Child> children) {
+        ChildRepo.children = children;
+    }
+
+    public static int getCurrentChildId() {
+        return currentChildId;
+    }
+
+    public static void setCurrentChildId(int currentChildId) {
+        ChildRepo.currentChildId = currentChildId;
+    }
+
+    public static Child getChildByName(String childrenName) {
+        for(int i = 0; i < children.size(); i++){
+            if(childrenName == children.get(i).getName()){
+                return children.get(i);
+            }
+        }
+        return null;
     }
 }

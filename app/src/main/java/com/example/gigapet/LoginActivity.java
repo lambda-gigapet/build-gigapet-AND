@@ -408,12 +408,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mPassword;
         private int id;
         private String token;
+        private String mJwt;
 
         UserLoginTask(String username, String password) {
             mUsername = username;
             mPassword = password;
             token = "";
             id = -1;
+            mJwt = "";
         }
 
         @Override
@@ -434,6 +436,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Thread.sleep(2000);
                 token = jsonObject.getString("token");
                 id = jsonObject.getInt("id");
+              //  mJwt = jsonObject.getString("jwt");
 
 
                 if (token != "" && id != -1) {
@@ -443,6 +446,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Constants.editor.putInt("parent_id", id);
                     Constants.editor.putString("password", mPassword);
                     Constants.editor.putString("username", mUsername);
+                  //  Constants.editor.putString("jwt", mJwt);
                     Constants.editor.commit();
 
                     Intent intent = new Intent(getApplicationContext(), GigapetMainActivity.class);

@@ -7,24 +7,8 @@ public class Parent {
     private static int mealIndex;
     private static String token;
     private static String name;
-    private static int currentChildIndex;
 
 
-    public static int getChildIndex() {
-        return currentChildIndex;
-    }
-
-    public static void setChildIndex(int childIndex) {
-        currentChildIndex = childIndex;
-    }
-
-    public static int getCurrentChildIndex() {
-        return currentChildIndex;
-    }
-
-    public static void setCurrentChildIndex(int currentChildIndex) {
-        Parent.currentChildIndex = currentChildIndex;
-    }
 
     public static int getMealIndex() {
         return mealIndex;
@@ -38,12 +22,12 @@ public class Parent {
         this.id = id;
         this.token = token;
         this.mealIndex = 1;
-        //TODO: load children from database
-        ChildDao.addChild(new Child("SteveJr",1));
-        currentChildIndex = 1;
+        loadChildren();
+        ChildDao.setCurrentChildId(ChildDao.getChildren().get(ChildDao.getChildren().size()-1).getId());
     }
-
-
+    public static void loadChildren(){
+        ChildDao.importChildrenFromDb();
+    }
 
     public static String[] getChildrensNamesAsArray() {
 
@@ -74,6 +58,10 @@ public class Parent {
 
     public static void setName(String newName) {
         name = newName;
+    }
+
+    public static void setToken(String token) {
+        Parent.token = token;
     }
 
 }
