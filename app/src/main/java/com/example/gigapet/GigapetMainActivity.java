@@ -47,6 +47,16 @@ public class GigapetMainActivity extends AppCompatActivity {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+        /*        new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ChildDao.setCurrentChildId(1);
+                        ChildDao.getFoodEntriesTimeSpan("week");
+
+                    }
+                }).start();*/
                 Intent intent = new Intent(getApplicationContext(), ParentMainActivity.class);
                startActivity(intent);
             }

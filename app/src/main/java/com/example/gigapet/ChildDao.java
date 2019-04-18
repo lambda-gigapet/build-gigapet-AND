@@ -11,17 +11,28 @@ import java.util.Map;
 
 public class ChildDao {
 
-    public static Child getCurrentChild(){
+    public static Child getCurrentChild() {
         return ChildRepo.getChildById(ChildRepo.getCurrentChildId());
     }
 
     public static void addChild(Child child) {
-        ChildRepo.addChild(child);
+        JSONObject requestBody = null;
+        try {
+            requestBody = new JSONObject(
+                    (String.format("{\"name\":\"%s\",\"pet_name\":\"%s\",\"pet_experience\":%d,\"pet_id\":%d}",
+                            child.getName(),
+                            child.getGigapet().getName(),
+                            child.getGigapet().getExp(),
+                            child.getGigapet().getId())));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        NetworkAdapter.httpRequest(String.format(Constants.ADD_CHILD_URL, Constants.prefs.getInt("parent_id", 0)), NetworkAdapter.POST, requestBody, getHeaders());
     }
 
     public static JSONObject getFoodHistory(int mealType, int childPos) {
         JSONObject jsonObject = null;
-       String history = "{\"carbs\":[{\"id\": 1,\"name\": \"Porridge\",\"quantity\": 2,\"meal\": \"Breakfast\",\"category\": \"Carbs\",\"date_added\": \"2019--04-15\",\"date_update\": \"2019--04-15\",\"child_id\": 1 },{\"id\": 1,\"name\": \"Porridge\",\"quantity\": 2,\"meal\": \"Breakfast\",\"category\": \"Protein\",\"date_added\": \"2019--04-15\",\"date_update\": \"2019--04-15\",\"child_id\": 1 }],\"protein\": [{\"id\": 1,\"name\": \"Porridge\",\"quantity\": 4,\"meal\": \"Lunch\",\"category\": \"Carbs\",\"date_added\": \"2019--04-15\",\"date_update\": \"2019--04-15\",\"child_id\": 1 }],\"vegetables\": [{\"id\": 1,\"name\": \"Porridge\",\"quantity\": 2,\"meal\": \"Breakfast\",\"category\": \"Carbs\",\"date_added\": \"2019--04-15\",\"date_update\": \"2019--04-15\",\"child_id\": 1 }],\"fruits\": [{\"id\": 1,\"name\": \"Porridge\",\"quantity\": 2,\"meal\": \"Breakfast\",\"category\": \"Carbs\",\"date_added\": \"2019--04-15\",\"date_update\": \"2019--04-15\",\"child_id\": 1 }],\"dairy\": [{\"id\": 1,\"name\": \"Porridge\",\"quantity\": 2,\"meal\": \"Breakfast\",\"category\": \"Carbs\",\"date_added\": \"2019--04-15\",\"date_update\": \"2019--04-15\",\"child_id\": 1 }]}";
+        String history = "{\"carbs\":[{\"id\": 1,\"name\": \"Porridge\",\"quantity\": 2,\"meal\": \"Breakfast\",\"category\": \"Carbs\",\"date_added\": \"2019--04-15\",\"date_update\": \"2019--04-15\",\"child_id\": 1 },{\"id\": 1,\"name\": \"Porridge\",\"quantity\": 2,\"meal\": \"Breakfast\",\"category\": \"Protein\",\"date_added\": \"2019--04-15\",\"date_update\": \"2019--04-15\",\"child_id\": 1 }],\"protein\": [{\"id\": 1,\"name\": \"Porridge\",\"quantity\": 4,\"meal\": \"Lunch\",\"category\": \"Carbs\",\"date_added\": \"2019--04-15\",\"date_update\": \"2019--04-15\",\"child_id\": 1 }],\"vegetables\": [{\"id\": 1,\"name\": \"Porridge\",\"quantity\": 2,\"meal\": \"Breakfast\",\"category\": \"Carbs\",\"date_added\": \"2019--04-15\",\"date_update\": \"2019--04-15\",\"child_id\": 1 }],\"fruits\": [{\"id\": 1,\"name\": \"Porridge\",\"quantity\": 2,\"meal\": \"Breakfast\",\"category\": \"Carbs\",\"date_added\": \"2019--04-15\",\"date_update\": \"2019--04-15\",\"child_id\": 1 }],\"dairy\": [{\"id\": 1,\"name\": \"Porridge\",\"quantity\": 2,\"meal\": \"Breakfast\",\"category\": \"Carbs\",\"date_added\": \"2019--04-15\",\"date_update\": \"2019--04-15\",\"child_id\": 1 }]}";
         try {
             jsonObject = new JSONObject(history);
         } catch (JSONException e) {
@@ -45,7 +56,7 @@ public class ChildDao {
     }
 
     public static void removeChild(int pos) {
-    ChildRepo.removeChild(pos);
+        NetworkAdapter.httpRequest(Constants.CHILD_URL + "/" + String.valueOf(pos) + "/", NetworkAdapter.DELETE, getHeaders());
     }
 
     public static void importChildrenFromDb() {
@@ -59,84 +70,95 @@ public class ChildDao {
         String sadImg = "";
         String sickImg = "";
         String eatingImg = "";
+        JSONObject jsonObject;
+
 
         final String result = NetworkAdapter.httpRequest(
                 Constants.PARENT_URL
                         + String.valueOf(
-                        Constants.prefs.getInt("parent_id", 0)),
+                        Parent.getId()),
                 NetworkAdapter.GET, getHeaders());
 
         try {
-            JSONObject jsonObject = new JSONObject(result);
+            jsonObject = new JSONObject(result);
             try {
-                ChildRepo.removeAllChildren();
                 JSONArray jsonArray = jsonObject.getJSONArray("childArray");
-                for (int i = 0; i < jsonArray.length(); i++) {
+                if (jsonArray.isNull(0)) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ChildDao.addChild(new Child("Default", 1));
+                        }
+                    }).start();
 
-                    try {
-                        childId = jsonArray.getJSONObject(i).getInt("child_id");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        childName = jsonArray.getJSONObject(i).getString("child_name");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        petName = jsonArray.getJSONObject(i).getString("pet_name");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        petExp = jsonArray.getJSONObject(i).getInt("pet_experience");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        petId = jsonArray.getJSONObject(i).getInt("pet_id");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        happyImg = jsonArray.getJSONObject(i).getString("happy");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        okImg = jsonArray.getJSONObject(i).getString("ok");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        sadImg = jsonArray.getJSONObject(i).getString("sad");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        sickImg = jsonArray.getJSONObject(i).getString("sick");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        eatingImg = jsonArray.getJSONObject(i).getString("eating");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                } else {
+                    ChildRepo.removeAllChildren();
+                    for (int i = 0; i < jsonArray.length(); i++) {
 
-                    ChildRepo.addChild(new Child(
-                            childName,
-                            childId,
-                            new Gigapet(
-                                    petName,
-                                    petExp,
-                                    petId,
-                                    happyImg,
-                                    okImg,
-                                    sadImg,
-                                    sickImg,
-                                    eatingImg)));
+                        try {
+                            childId = jsonArray.getJSONObject(i).getInt("child_id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            childName = jsonArray.getJSONObject(i).getString("child_name");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            petName = jsonArray.getJSONObject(i).getString("pet_name");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            petExp = jsonArray.getJSONObject(i).getInt("pet_experience");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            petId = jsonArray.getJSONObject(i).getInt("pet_id");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            happyImg = jsonArray.getJSONObject(i).getString("happy");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            okImg = jsonArray.getJSONObject(i).getString("ok");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            sadImg = jsonArray.getJSONObject(i).getString("sad");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            sickImg = jsonArray.getJSONObject(i).getString("sick");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            eatingImg = jsonArray.getJSONObject(i).getString("eating");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
+                        ChildRepo.addChild(new Child(
+                                childName,
+                                childId,
+                                new Gigapet(
+                                        petName,
+                                        petExp,
+                                        petId,
+                                        happyImg,
+                                        okImg,
+                                        sadImg,
+                                        sickImg,
+                                        eatingImg)));
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -146,9 +168,10 @@ public class ChildDao {
         }
     }
 
-        public static Map<String,String> getHeaders(){
-        Map<String,String> params = new HashMap<>();
+    public static Map<String, String> getHeaders() {
+        Map<String, String> params = new HashMap<>();
         params.put("Authorization", Constants.prefs.getString("token", "default"));
+        params.put("Content-Type", "application/json");
         return params;
     }
 
@@ -160,4 +183,27 @@ public class ChildDao {
         return ChildRepo.getChildByName(childrenName);
     }
 
+/*    public static int[] getFoodEntriesTimeSpan(String timeSpan) {
+        int[] entries = new int[6];
+        ArrayList<Food>  foods = new ArrayList<>();
+        String result = NetworkAdapter.httpRequest(String.format(Constants.FOOD_ENTRIES_ID_TIME, ChildDao.getCurrentChild().getId(), timeSpan), NetworkAdapter.GET, getHeaders());
+
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+
+            try {
+                for (int i = 0; i < entries.length; i++) {
+                    JSONArray jsonArray = new JSONArray();
+                    //TODO: wait for backend restructure
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }*/
 }

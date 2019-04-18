@@ -70,7 +70,9 @@ public class NetworkAdapter {
             }
 
             final int responseCode = connection.getResponseCode();
-            if(responseCode != HttpsURLConnection.HTTP_OK){
+
+
+            if(responseCode != HttpsURLConnection.HTTP_CREATED && responseCode != HttpsURLConnection.HTTP_OK){
                 return null;
             }else{
                 inputStream = connection.getInputStream();

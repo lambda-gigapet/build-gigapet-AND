@@ -13,6 +13,7 @@ public class Gigapet {
     public Gigapet(String name, int id) {
         this.name = name;
         this.id = id;
+        this.exp = 0;
     }
 
     public Gigapet(String name, int exp, int id, String happyImg, String okImg, String sadImg, String sickImg, String eatingImg) {

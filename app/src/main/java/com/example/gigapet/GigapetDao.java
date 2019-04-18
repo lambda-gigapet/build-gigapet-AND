@@ -22,7 +22,6 @@ public class GigapetDao {
         return Constants.CHILD_URL;
     }
 
-
     public static void addGigapetToCurrentChild(int id, Gigapet gigapet) {
     }
 

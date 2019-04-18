@@ -71,6 +71,7 @@ public class ParentMainActivity extends AppCompatActivity {
         dailyHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 loadDailyFragment();
             }
         });
@@ -91,6 +92,7 @@ public class ParentMainActivity extends AppCompatActivity {
             }
         });
 
+        loadAddFoodFragment();
 
     }
 
@@ -218,25 +220,20 @@ public class ParentMainActivity extends AppCompatActivity {
     public static void loadHistoryData() {
         //TODO: pull in history data based on currentChildIndex
         //JSONObject jsonObject =  ChildDao.getFoodHistory();
+        LineGraphSeries<DataPoint> seriesSwith = new LineGraphSeries<>();
+        List<SliceValue> pieData = new ArrayList<>();
 
         switch (fragmentCounter) {
-            case 1:
-                break;
-            case 2: //load daily data
-                break;
-            case 3: //load weekly data
-                break;
-            case 4: //load monthly data
-                break;
-        }
+            case 2:
+                pieData = new ArrayList<>();
+                pieData.add(new SliceValue(34, Color.YELLOW));
+                pieData.add(new SliceValue(34, Color.BLUE));
+                pieData.add(new SliceValue(20, Color.RED));
+                pieData.add(new SliceValue(54, Color.GREEN));
+                pieData.add(new SliceValue(54, Color.GREEN));
+                pieData.add(new SliceValue(54, Color.GREEN));
 
-
-        LineGraphSeries<DataPoint> series3 = new LineGraphSeries<>();
-        switch (Parent.getMealIndex()) {
-            case 0:
-                break;
-            case 1:
-                series3 = new LineGraphSeries<>(new DataPoint[]{
+                seriesSwith = new LineGraphSeries<>(new DataPoint[]{
                         new DataPoint(0, 2),
                         new DataPoint(1, 4),
                         new DataPoint(2, 3),
@@ -245,60 +242,63 @@ public class ParentMainActivity extends AppCompatActivity {
                         new DataPoint(5, 3),
                         new DataPoint(6, 2)});
                 break;
-            case 2:
+            case 3:
+
+                pieData = new ArrayList<>();
+                pieData.add(new SliceValue(34, Color.YELLOW));
+                pieData.add(new SliceValue(34, Color.BLUE));
+                pieData.add(new SliceValue(20, Color.RED));
+                pieData.add(new SliceValue(54, Color.GREEN));
+                pieData.add(new SliceValue(20, Color.RED));
+                pieData.add(new SliceValue(54, Color.GREEN));
+
+                seriesSwith = new LineGraphSeries<>(new DataPoint[]{
+                        new DataPoint(0, 2),
+                        new DataPoint(1, 4),
+                        new DataPoint(2, 3),
+                        new DataPoint(6, 2)});
+                break;
+            case 4: //load weekly data
+
+                pieData = new ArrayList<>();
+                pieData.add(new SliceValue(34, Color.YELLOW));
+                pieData.add(new SliceValue(34, Color.BLUE));
+                pieData.add(new SliceValue(20, Color.RED));
+                pieData.add(new SliceValue(54, Color.GREEN));
+                pieData.add(new SliceValue(20, Color.RED));
+                pieData.add(new SliceValue(54, Color.GREEN));
+
+                seriesSwith = new LineGraphSeries<>(new DataPoint[]{
+                        new DataPoint(0, 2),
+                        new DataPoint(1, 4),
+                        new DataPoint(2, 3),
+                        new DataPoint(3, 5),
+                        new DataPoint(4, 2),
+                        new DataPoint(5, 3),
+                        new DataPoint(6, 4),
+                        new DataPoint(7, 3),
+                        new DataPoint(8, 5),
+                        new DataPoint(9, 2),
+                        new DataPoint(10, 3),
+                        new DataPoint(11, 2)});
+                break;
+            case 1: //load monthly data
                 break;
         }
 
-        List<SliceValue> pieData = new ArrayList<>();
-        pieData.add(new SliceValue(34, Color.YELLOW));
-        pieData.add(new SliceValue(34, Color.BLUE));
-        pieData.add(new SliceValue(20, Color.RED));
-        pieData.add(new SliceValue(54, Color.GREEN));
 
         PieChartData pieChartData = new PieChartData(pieData);
 
         pieChartView.setPieChartData(pieChartData);
 
-        LineGraphSeries<DataPoint> series1 = new LineGraphSeries<>(new DataPoint[]{
-                new DataPoint(0, 2),
-                new DataPoint(1, 4),
-                new DataPoint(2, 3),
-                new DataPoint(3, 5),
-                new DataPoint(4, 2),
-                new DataPoint(5, 3),
-                new DataPoint(6, 2)
-        });
+        graphView.addSeries(seriesSwith);
+      //  graphView.getViewport().setMaxX(6);
 
-        LineGraphSeries<DataPoint> series2 = new LineGraphSeries<>(new DataPoint[]{
-                new DataPoint(0, 1),
-                new DataPoint(1, 6),
-                new DataPoint(2, 2),
-                new DataPoint(3, 3),
-                new DataPoint(4, 6),
-                new DataPoint(5, 2),
-                new DataPoint(6, 1)
-        });
+        //StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
+       // staticLabelsFormatter.setHorizontalLabels(new String[]{"Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"});
+       // graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
-        series3 = new LineGraphSeries<>(new DataPoint[]{
-                new DataPoint(0, 2),
-                new DataPoint(1, 4),
-                new DataPoint(2, 3),
-                new DataPoint(3, 5),
-                new DataPoint(4, 2),
-                new DataPoint(5, 3),
-                new DataPoint(6, 2)});
-
-
-        graphView.addSeries(series1);
-        graphView.addSeries(series2);
-        graphView.addSeries(series3);
-        graphView.getViewport().setMaxX(6);
-
-        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
-        staticLabelsFormatter.setHorizontalLabels(new String[] {"Mon","Tue","Wed","Thur","Fri","Sat","Sun"});
-        graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-
-        graphView.getViewport().setXAxisBoundsManual(true);
+       // graphView.getViewport().setXAxisBoundsManual(true);
     }
 
 
@@ -306,9 +306,10 @@ public class ParentMainActivity extends AppCompatActivity {
         public static final String ARG_ITEM_ID = "item_id";
         AddFoodListAdapter listAdapter;
         RecyclerView recyclerView;
-        Button btnMealBreakfast ;
-        Button btnMealLunch ;
-        Button btnMealDinner ;
+        Button btnMealBreakfast;
+        Button btnMealLunch;
+        Button btnMealDinner;
+        Button btnAddFood;
 
         public AddFoodFragment() {
         }
@@ -327,6 +328,16 @@ public class ParentMainActivity extends AppCompatActivity {
             btnMealBreakfast = rootView.findViewById(R.id.meal_type_breakfast);
             btnMealLunch = rootView.findViewById(R.id.meal_type_lunch);
             btnMealDinner = rootView.findViewById(R.id.meal_type_dinner);
+            int[] foodItems = new int[6];
+
+            btnAddFood = rootView.findViewById(R.id.btn_submit_add_food);
+
+            btnAddFood.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //ChildDao.addFood
+                }
+            });
 
             btnMealBreakfast.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -372,6 +383,9 @@ public class ParentMainActivity extends AppCompatActivity {
 
     public static class DailyHistoryFragment extends Fragment {
         public static final String ARG_ITEM_ID = "item_id";
+        TextView tvCurrentChildName;
+        TextView tvMealType;
+        TextView tvTimeFrame;
 
         public DailyHistoryFragment() {
         }
@@ -388,6 +402,12 @@ public class ParentMainActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_parent_history, container, false);
             graphView = rootView.findViewById(R.id.gv_line_graph);
             pieChartView = rootView.findViewById(R.id.pc_pie_chart);
+            tvCurrentChildName = rootView.findViewById(R.id.section_label);
+            tvMealType = rootView.findViewById(R.id.tv_meal_type);
+            tvTimeFrame = rootView.findViewById(R.id.tv_history_time);
+            tvCurrentChildName.setText(ChildDao.getCurrentChild().getName());
+            tvMealType.setText(Constants.MEAL_TYPES[Parent.getMealIndex()]);
+            tvTimeFrame.setText("Daily");
             loadHistoryData();
 
 
@@ -398,6 +418,9 @@ public class ParentMainActivity extends AppCompatActivity {
 
     public static class WeeklyHistoryFragment extends Fragment {
         public static final String ARG_ITEM_ID = "item_id";
+        TextView tvCurrentChildName;
+        TextView tvMealType;
+        TextView tvTimeFrame;
 
         public WeeklyHistoryFragment() {
         }
@@ -414,6 +437,12 @@ public class ParentMainActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_parent_history, container, false);
             graphView = rootView.findViewById(R.id.gv_line_graph);
             pieChartView = rootView.findViewById(R.id.pc_pie_chart);
+            tvCurrentChildName = rootView.findViewById(R.id.section_label);
+            tvMealType = rootView.findViewById(R.id.tv_meal_type);
+            tvTimeFrame = rootView.findViewById(R.id.tv_history_time);
+            tvCurrentChildName.setText(ChildDao.getCurrentChild().getName());
+            tvMealType.setText(Constants.MEAL_TYPES[Parent.getMealIndex()]);
+            tvTimeFrame.setText("Weekly");
             loadHistoryData();
 
             return rootView;
@@ -423,6 +452,9 @@ public class ParentMainActivity extends AppCompatActivity {
 
     public static class MonthlyHistoryFragment extends Fragment {
         public static final String ARG_ITEM_ID = "item_id";
+        TextView tvCurrentChildName;
+        TextView tvMealType;
+        TextView tvTimeFrame;
 
         public MonthlyHistoryFragment() {
         }
@@ -437,8 +469,15 @@ public class ParentMainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_parent_history, container, false);
+            tvCurrentChildName = rootView.findViewById(R.id.section_label);
+            tvMealType = rootView.findViewById(R.id.tv_meal_type);
+            tvTimeFrame = rootView.findViewById(R.id.tv_history_time);
             graphView = rootView.findViewById(R.id.gv_line_graph);
             pieChartView = rootView.findViewById(R.id.pc_pie_chart);
+
+            tvCurrentChildName.setText(ChildDao.getCurrentChild().getName());
+            tvMealType.setText(Constants.MEAL_TYPES[Parent.getMealIndex()]);
+            tvTimeFrame.setText("Monthly");
             loadHistoryData();
 
             return rootView;
@@ -469,7 +508,14 @@ public class ParentMainActivity extends AppCompatActivity {
             btnAddChild.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ChildDao.addChild(new Child(etAddChild.getText().toString(),ChildDao.getHighestId()+1));
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ChildDao.addChild(new Child(etAddChild.getText().toString(), ChildDao.getHighestId() + 1));
+                            ChildDao.importChildrenFromDb();
+                        }
+                    }).start();
+
                 }
             });
             return rootView;

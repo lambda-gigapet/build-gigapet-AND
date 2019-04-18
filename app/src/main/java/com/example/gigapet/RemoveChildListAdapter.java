@@ -30,7 +30,14 @@ public class RemoveChildListAdapter extends RecyclerView.Adapter<RemoveChildList
         viewHolder.vParentView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                ChildDao.removeChild(pos);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ChildDao.removeChild(ChildDao.getChildren().get(pos).getId());
+                        ChildDao.importChildrenFromDb();
+                    }
+                }).start();
+
                 notifyDataSetChanged();
                 return true;
             }
