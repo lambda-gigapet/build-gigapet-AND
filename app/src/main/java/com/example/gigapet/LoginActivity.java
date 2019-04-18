@@ -69,6 +69,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
+
+        Constants.setSharedPrefs(getApplicationContext());
         mEmailView = findViewById(R.id.email);
         populateAutoComplete();
 
@@ -86,6 +88,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
+
+        Constants.setSharedPrefs(getApplicationContext());
+        if(!Constants.prefs.getString("username","enterName").equals("enterName")){
+            mUsernameView.setText(Constants.prefs.getString("username", "enterName"));
+        }
+
+        if(!Constants.prefs.getString("password","enterPassword").equals("enterPassword")){
+            mPasswordView.setText(Constants.prefs.getString("password", "enterPassword"));
+        }
 
 
         final Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
@@ -427,10 +438,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 if (token != "" && id != -1) {
                     parent = new Parent(id, token);
+
+                    Constants.editor.putString("token", token);
+                    Constants.editor.putInt("parent_id", id);
+                    Constants.editor.putString("password", mPassword);
+                    Constants.editor.putString("username", mUsername);
+                    Constants.editor.commit();
+
                     Intent intent = new Intent(getApplicationContext(), GigapetMainActivity.class);
                     startActivity(intent);
                 }
-                parent = new Parent(id, token);
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {

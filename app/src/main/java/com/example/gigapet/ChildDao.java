@@ -37,4 +37,12 @@ public class ChildDao {
     public static int getHighestId() {
         return ChildRepo.getHighestId();
     }
+
+    public static String[] getChildrenNames() {
+        return ChildRepo.getChildrenNames();
+    }
+
+    public static void removeChild(int pos) {
+    ChildRepo.removeChild(pos);
+    }
 }

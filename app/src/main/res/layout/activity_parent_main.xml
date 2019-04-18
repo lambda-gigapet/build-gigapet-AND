@@ -8,6 +8,13 @@
     android:fitsSystemWindows="true"
     tools:context=".ParentMainActivity">
 
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_sidebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.58" />
+
     <Button
         android:id="@+id/food_config_button"
         android:layout_width="0dp"
@@ -65,12 +72,24 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@id/weekly_button"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp" />
+
+
+    <FrameLayout
+        android:id="@+id/sidebar_container"
+        android:layout_width="0dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/weekly_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/gl_sidebar"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="0dp" />
 
 
 </android.support.constraint.ConstraintLayout>

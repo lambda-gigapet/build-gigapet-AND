@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#FFF"
     android:paddingBottom="45dp"
     tools:context=".ParentMainActivity$AddFoodFragment">
@@ -13,11 +13,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_parent_add_food"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/et_add_child"
         app:layout_constraintLeft_toLeftOf="@id/gl_left"
-        app:layout_constraintRight_toLeftOf="@id/gl_right"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintRight_toLeftOf="@id/gl_right">
 
 
     </android.support.v7.widget.RecyclerView>

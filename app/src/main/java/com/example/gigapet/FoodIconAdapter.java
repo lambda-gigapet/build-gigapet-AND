@@ -56,7 +56,6 @@ public class FoodIconAdapter extends RecyclerView.Adapter<FoodIconAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull FoodIconAdapter.ViewHolder viewHolder, int i) {
         final FoodIcons data = foodIcons.get(i);
-        DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
 
         foodIcons.clear();
         int[] foodAmountArr = ChildDao.getCurrentChild().getAllFood();

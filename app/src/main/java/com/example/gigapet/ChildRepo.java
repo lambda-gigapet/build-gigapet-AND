@@ -35,4 +35,18 @@ public class ChildRepo {
        }
        return result;
    }
+
+    public static String[] getChildrenNames() {
+        String[] names = new String[children.size()];
+        int i = 0;
+        for (Child child:children) {
+            names[i] = child.getName();
+            i++;
+        }
+        return names;
+    }
+
+    public static void removeChild(int pos) {
+        children.remove(pos);
+    }
 }

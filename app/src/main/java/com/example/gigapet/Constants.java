@@ -1,6 +1,13 @@
 package com.example.gigapet;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import static android.content.Context.MODE_PRIVATE;
+
 public class Constants {
+
+
     public static final String GIGAPET_DEFAULT_NAME = "Charlie";
     public static int FOOD_TYPE_FRUIT = 0;
     public static int FOOD_TYPE_VEGGIE = 1;
@@ -12,6 +19,8 @@ public class Constants {
     public static int MEAL_TYPE_BREAKFAST = 1;
     public static int MEAL_TYPE_LUNCH = 2;
     public static int MEAL_TYPE_DINNER = 3;
+    public static SharedPreferences prefs;
+    public static SharedPreferences.Editor editor;
 
     public static String[] MEAL_TYPES = {"All Meals", "Breakfast", "Lunch", "Dinner"};
 
@@ -22,4 +31,9 @@ public class Constants {
     public static String LOGIN_URL = BASE_URL + "api/auth/login";
     public static String CHILD_URL = BASE_URL + "api/child/%d";
 
+
+    public static void setSharedPrefs(Context context){
+        prefs = context.getSharedPreferences("MyPref", MODE_PRIVATE);
+        editor = prefs.edit();
+    }
 }

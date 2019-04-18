@@ -43,8 +43,18 @@ public class GigapetMainActivity extends AppCompatActivity {
         iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ParentMainActivity.class);
-                startActivity(intent);
+
+                String response;
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                }).start();
+
+                //Intent intent = new Intent(getApplicationContext(), ParentMainActivity.class);
+               // startActivity(intent);
             }
         });
         checkForSweets();

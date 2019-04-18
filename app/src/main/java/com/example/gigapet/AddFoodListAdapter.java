@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class AddFoodListAdapter extends RecyclerView.Adapter<AddFoodListAdapter.ViewHolder> {
 
     public AddFoodListAdapter(){
-
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

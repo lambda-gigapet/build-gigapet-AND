@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -141,6 +142,42 @@ public class ParentMainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    public void loadSelectChildFragment() {
+        fragmentCounter = 5;
+        Bundle arguments = new Bundle();
+        arguments.putString(SelectChildFragment.ARG_ITEM_ID,
+                getIntent().getStringExtra(SelectChildFragment.ARG_ITEM_ID));
+        SelectChildFragment fragment = new SelectChildFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, fragment)
+                .commit();
+    }
+
+    public void loadRemoveChildFragment() {
+        fragmentCounter = 6;
+        Bundle arguments = new Bundle();
+        arguments.putString(RemoveChildFragment.ARG_ITEM_ID,
+                getIntent().getStringExtra(RemoveChildFragment.ARG_ITEM_ID));
+        RemoveChildFragment fragment = new RemoveChildFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, fragment)
+                .commit();
+    }
+
+    public void loadAddChildFragment() {
+        fragmentCounter = 7;
+        Bundle arguments = new Bundle();
+        arguments.putString(AddChildFragment.ARG_ITEM_ID,
+                getIntent().getStringExtra(AddChildFragment.ARG_ITEM_ID));
+        AddChildFragment fragment = new AddChildFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_parent_main, menu);
@@ -152,10 +189,13 @@ public class ParentMainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_select_child:
+                loadSelectChildFragment();
                 break;
             case R.id.action_add_child:
+                loadAddChildFragment();
                 break;
             case R.id.action_remove_child:
+                loadRemoveChildFragment();
                 break;
             case R.id.action_mealtype_all:
                 Parent.setMealIndex(Constants.MEAL_TYPE_ALL);
@@ -238,10 +278,26 @@ public class ParentMainActivity extends AppCompatActivity {
                 new DataPoint(5, 2),
                 new DataPoint(6, 1)
         });
+
+        series3 = new LineGraphSeries<>(new DataPoint[]{
+                new DataPoint(0, 2),
+                new DataPoint(1, 4),
+                new DataPoint(2, 3),
+                new DataPoint(3, 5),
+                new DataPoint(4, 2),
+                new DataPoint(5, 3),
+                new DataPoint(6, 2)});
+
+
         graphView.addSeries(series1);
         graphView.addSeries(series2);
         graphView.addSeries(series3);
         graphView.getViewport().setMaxX(6);
+
+        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
+        staticLabelsFormatter.setHorizontalLabels(new String[] {"Mon","Tue","Wed","Thur","Fri","Sat","Sun"});
+        graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
         graphView.getViewport().setXAxisBoundsManual(true);
     }
 
@@ -351,5 +407,86 @@ public class ParentMainActivity extends AppCompatActivity {
             return rootView;
         }
     }
+
+    public static class AddChildFragment extends Fragment {
+        public static final String ARG_ITEM_ID = "item_id";
+
+        public AddChildFragment() {
+        }
+
+        @Nullable
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_add_child, container, false);
+            return rootView;
+        }
+    }
+
+    public static class RemoveChildFragment extends Fragment {
+        public static final String ARG_ITEM_ID = "item_id";
+        RemoveChildListAdapter listAdapter;
+        RecyclerView recyclerView;
+
+        public RemoveChildFragment() {
+        }
+
+        @Nullable
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_remove_child, container, false);
+            recyclerView = rootView.findViewById(R.id.recycler_view_remove_child);
+            recyclerView.setHasFixedSize(true);
+            listAdapter = new RemoveChildListAdapter();
+            LinearLayoutManager layoutManager = new LinearLayoutManager(rootView.getContext());
+
+            recyclerView.setAdapter(listAdapter);
+            recyclerView.setLayoutManager(layoutManager);
+            return rootView;
+        }
+    }
+
+
+    public static class SelectChildFragment extends Fragment {
+        public static final String ARG_ITEM_ID = "item_id";
+        SelectChildListAdapter listAdapter;
+        RecyclerView recyclerView;
+
+        public SelectChildFragment() {
+        }
+
+        @Nullable
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_select_child, container, false);
+            recyclerView = rootView.findViewById(R.id.recycler_view_select_child);
+            recyclerView.setHasFixedSize(true);
+            listAdapter = new SelectChildListAdapter();
+            LinearLayoutManager layoutManager = new LinearLayoutManager(rootView.getContext());
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(listAdapter);
+
+            return rootView;
+        }
+    }
+
+
 }
 
