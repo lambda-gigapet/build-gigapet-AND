@@ -58,8 +58,6 @@ public class FoodIconAdapter extends RecyclerView.Adapter<FoodIconAdapter.ViewHo
         final FoodIcons data = foodIcons.get(i);
         DisplayMetrics displayMetrics = Resources.getSystem().getDisplayMetrics();
 
-        // viewHolder.vParentView.setLayoutParams(new ViewGroup.LayoutParams(displayMetrics.widthPixels/3,displayMetrics.widthPixels/3));
-
         foodIcons.clear();
         int[] foodAmountArr = ChildDao.getCurrentChild().getAllFood();
         for (int j = 0; j < 5; ++j) {

@@ -3,8 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.gigapet.ParentMainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:id="@+id/action_select_child"
+        android:title="Select Child"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_add_child"
+        android:title="Add Child"
+        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/action_remove_child"
+        android:orderInCategory="100"
+        android:title="Remove Child"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_mealtype_all"
+        android:orderInCategory="100"
+        android:title="Show All Meals"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_mealtype_breakfast"
+        android:orderInCategory="100"
+        android:title="Show Breakfast"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_mealtype_lunch"
+        android:orderInCategory="100"
+        android:title="Show Lunch"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_mealtype_dinner"
+        android:orderInCategory="100"
+        android:title="Show Dinner"
+        app:showAsAction="never" />
+
 </menu>

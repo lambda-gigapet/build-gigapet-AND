@@ -5,8 +5,9 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:padding="15dp"
-    tools:context=".ParentMainActivity$PlaceholderFragment">
+    tools:context=".ParentMainActivity$DailyHistoryFragment">
 
     <TextView
         android:id="@+id/section_label"
@@ -30,26 +31,18 @@
         android:text="WEEKLY"
         android:textSize="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/tv_meal_type"
         app:layout_constraintTop_toBottomOf="@id/section_label" />
 
-    <Spinner
-        android:id="@+id/spinner_child_select_history"
+    <TextView
+        android:id="@+id/tv_meal_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guide_graph_view_split_1"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <Spinner
-        android:id="@+id/spinner_meal_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:entries="@array/meal_type"
-        android:text="Steve's Eating Habits"
-        app:layout_constraintBottom_toTopOf="@+id/guide_graph_view_split_1"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:text="ALL Meals"
+        android:textSize="24dp"
+        app:layout_constraintLeft_toRightOf="@id/tv_history_time"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/section_label" />
 
     <com.jjoe64.graphview.GraphView
         android:id="@+id/gv_line_graph"
@@ -91,15 +84,25 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="270dp" />
 
+    <Button
+        android:id="@+id/refresh_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Refresh"
+        app:layout_constraintBottom_toTopOf="@id/tv_legend_fruits"
+        app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
+        app:layout_constraintRight_toLeftOf="@id/iv_fruits"
+        app:layout_constraintTop_toBottomOf="@id/guide_graph_view_split_1"/>
+
     <TextView
-        android:id="@+id/tv_fruits"
+        android:id="@+id/tv_legend_fruits"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Fruit"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_veggies"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_fruits"
-        app:layout_constraintTop_toBottomOf="@id/guide_graph_view_split_1" />
+        app:layout_constraintTop_toBottomOf="@id/refresh_data" />
 
     <TextView
         android:id="@+id/tv_legend_veggies"
@@ -109,7 +112,7 @@
         app:layout_constraintBottom_toTopOf="@id/tv_legend_carbs"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_legend_veggies"
-        app:layout_constraintTop_toBottomOf="@id/tv_fruits" />
+        app:layout_constraintTop_toBottomOf="@id/tv_legend_fruits" />
 
     <TextView
         android:id="@+id/tv_legend_carbs"
@@ -157,9 +160,9 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_veggies"
-        app:layout_constraintLeft_toRightOf="@id/tv_fruits"
+        app:layout_constraintLeft_toRightOf="@id/tv_legend_fruits"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guide_graph_view_split_1" />
+        app:layout_constraintTop_toBottomOf="@id/refresh_data" />
 
     <ImageView
         android:id="@+id/iv_legend_veggies"
@@ -169,7 +172,7 @@
         app:layout_constraintBottom_toTopOf="@id/tv_legend_carbs"
         app:layout_constraintLeft_toRightOf="@id/tv_legend_veggies"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_fruits" />
+        app:layout_constraintTop_toBottomOf="@id/tv_legend_fruits" />
 
     <ImageView
         android:id="@+id/iv_legend_carbs"

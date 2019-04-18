@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/recycler_view_item_add_food"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/iv_button_food_minus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/food_minus_icon" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_food"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/fruit_icon" />
+
+        <ImageView
+            android:id="@+id/iv_food_icon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="10dp"
+            android:padding="15dp"
+            android:src="@drawable/fruit_apple" />
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="15dp"
+            android:padding="2dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="right|bottom"
+            android:background="#aa000000"
+            android:textColor="#fff" />
+
+    </FrameLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_button_food_plus"
+        android:layout_width="30dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/food_plus_icon" />
+
+
+
+</LinearLayout>

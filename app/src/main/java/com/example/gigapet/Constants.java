@@ -8,6 +8,10 @@ public class Constants {
     public static int FOOD_TYPE_PROTEIN = 3;
     public static int FOOD_TYPE_DAIRY = 4;
     public static int FOOD_TYPE_SWEET = 5;
+    public static int MEAL_TYPE_ALL = 0;
+    public static int MEAL_TYPE_BREAKFAST = 1;
+    public static int MEAL_TYPE_LUNCH = 2;
+    public static int MEAL_TYPE_DINNER = 3;
 
     public static String[] MEAL_TYPES = {"All Meals", "Breakfast", "Lunch", "Dinner"};
 
