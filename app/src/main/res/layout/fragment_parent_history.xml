@@ -72,21 +72,20 @@
     <com.jjoe64.graphview.GraphView
         android:id="@+id/gv_line_graph"
         android:layout_width="wrap_content"
-        android:layout_height="268dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_height="200dp"
         android:layout_marginBottom="8dp"
-        android:background="#fff"
+        android:background="#FFF"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guide_graph_view_split_2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.327" />
 
     <lecho.lib.hellocharts.view.PieChartView
         android:id="@+id/pc_pie_chart"
-        android:layout_width="299dp"
-        android:layout_height="307dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/guide_graph_view_split_2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guide_graph_view_split_vertical_1"
@@ -104,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="410dp" />
+        app:layout_constraintGuide_percent="0.56" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guide_graph_view_split_vertical_1"
@@ -120,7 +119,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Fruit"
-        android:layout_marginLeft="15dp"
         android:textColor="#fff"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_veggies"
@@ -134,7 +132,6 @@
         android:layout_height="wrap_content"
         android:text="Veggies"
         android:textColor="#fff"
-        android:layout_marginLeft="15dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_carbs"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
@@ -148,7 +145,6 @@
         android:text="Carbs"
         android:textColor="#fff"
         android:textStyle="bold"
-        android:layout_marginLeft="15dp"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_protein"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_legend_carbs"
@@ -161,7 +157,6 @@
         android:text="Protein"
         android:textColor="#fff"
         android:textStyle="bold"
-        android:layout_marginLeft="15dp"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_dairy"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_legend_protein"
@@ -174,7 +169,6 @@
         android:text="Dairy"
         android:textColor="#fff"
         android:textStyle="bold"
-        android:layout_marginLeft="15dp"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_treats"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_legend_dairy"
@@ -187,7 +181,6 @@
         android:text="Treats"
         android:textColor="#fff"
         android:textStyle="bold"
-        android:layout_marginLeft="15dp"
         app:layout_constraintBottom_toTopOf="@id/guide_graph_view_split_2"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_legend_treats"
