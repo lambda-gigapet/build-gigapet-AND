@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -20,9 +21,9 @@ import static java.security.AccessController.getContext;
 public class FoodIconAdapter extends RecyclerView.Adapter<FoodIconAdapter.ViewHolder> {
 
     ArrayList<FoodIcons> foodIcons;
-
-
-    public FoodIconAdapter() {
+    Activity activity;
+    public FoodIconAdapter(Activity activity) {
+        this.activity = activity;
         foodIcons = new ArrayList<>();
         int[] foodAmountArr = ChildDao.getCurrentChild().getAllFood();
         for (int j = 0; j < 5; ++j) {
@@ -30,12 +31,13 @@ public class FoodIconAdapter extends RecyclerView.Adapter<FoodIconAdapter.ViewHo
         }
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         Context context;
         ImageView ivFoodImage;
         ImageView ivFoodBackground;
         TextView tvFoodAmount;
         View vParentView;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -43,6 +45,11 @@ public class FoodIconAdapter extends RecyclerView.Adapter<FoodIconAdapter.ViewHo
             tvFoodAmount = itemView.findViewById(R.id.tv_food_amount);
             ivFoodBackground = itemView.findViewById(R.id.iv_food_icon_background);
             vParentView = itemView.findViewById(R.id.recycler_view_item);
+        }
+
+        @Override
+        public void onClick(View v) {
+
         }
     }
 
@@ -54,14 +61,16 @@ public class FoodIconAdapter extends RecyclerView.Adapter<FoodIconAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FoodIconAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final FoodIconAdapter.ViewHolder viewHolder, int i) {
         final FoodIcons data = foodIcons.get(i);
 
         foodIcons.clear();
-        int[] foodAmountArr = ChildDao.getCurrentChild().getAllFood();
+       int[] foodAmountArr = ChildDao.getCurrentChild().getAllFood();
         for (int j = 0; j < 5; ++j) {
             foodIcons.add(new FoodIcons(j, foodAmountArr[j]));
         }
+
+
 
         viewHolder.tvFoodAmount.setText(String.valueOf(data.getNumberOfFood()));
         viewHolder.ivFoodImage.setImageResource(data.getRandomImage());
@@ -73,6 +82,14 @@ public class FoodIconAdapter extends RecyclerView.Adapter<FoodIconAdapter.ViewHo
                 if (ChildDao.getCurrentChild().getFoodById(position) > 0) {
                     ChildDao.getCurrentChild().removeFood(position, 1);
                     ChildDao.getCurrentChild().getGigapet().feed(position);
+                    foodIcons.clear();
+                    int[] foodAmountArr = ChildDao.getCurrentChild().getAllFood();
+                    for (int j = 0; j < 5; ++j) {
+                        foodIcons.add(new FoodIcons(j, foodAmountArr[j]));
+                    }
+
+                    new Animations(activity).ItemTap(viewHolder.vParentView);
+                    GigapetMainActivity.updateGigapet();
                     notifyDataSetChanged();
                 }
             }

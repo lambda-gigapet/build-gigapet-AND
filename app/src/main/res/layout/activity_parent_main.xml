@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.58" />
+        app:layout_constraintGuide_percent="0.72" />
 
     <Button
         android:id="@+id/food_config_button"

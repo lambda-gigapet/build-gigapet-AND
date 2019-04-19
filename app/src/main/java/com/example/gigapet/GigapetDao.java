@@ -1,11 +1,15 @@
 package com.example.gigapet;
 
 import android.arch.lifecycle.ViewModelProvider;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -92,6 +96,18 @@ public class GigapetDao {
 
             }
         }).start();
+    }
+
+    public static Bitmap bitmapFromURL(String imageURl) {
+        Bitmap image = null;
+
+        try {
+            URL url = new URL(imageURl);
+            image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
 

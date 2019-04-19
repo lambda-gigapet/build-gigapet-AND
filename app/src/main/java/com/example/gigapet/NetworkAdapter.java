@@ -15,8 +15,6 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-// S03M03-1 build and test firebase database
-// S03M03-2 Add basic network adapter
 public class NetworkAdapter {
     public static final String GET     = "GET";
     public static final String POST    = "POST";

@@ -27,6 +27,7 @@ public class FoodRepo {
     public void addFoodArr(ArrayList<Food> addedFoods){
         foods.addAll(addedFoods);
     }
+
     public static void addFood(Food food) {
         foods.add(food);
     }

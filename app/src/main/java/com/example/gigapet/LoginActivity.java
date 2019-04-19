@@ -143,6 +143,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 mRegisterFinalizeButton.setVisibility(View.VISIBLE);
                 mEmailSignInButton.setVisibility(View.GONE);
                 mBackToLogin.setVisibility(View.VISIBLE);
+                mUsernameView.setText("");
+                mPasswordView.setText("");
 
 
             }

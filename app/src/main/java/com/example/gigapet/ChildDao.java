@@ -16,6 +16,7 @@ public class ChildDao {
     }
 
     public static void addChild(Child child) {
+        ChildRepo.addChild(child);
         JSONObject requestBody = null;
         try {
             requestBody = new JSONObject(
@@ -27,7 +28,13 @@ public class ChildDao {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        NetworkAdapter.httpRequest(String.format(Constants.ADD_CHILD_URL, Constants.prefs.getInt("parent_id", 0)), NetworkAdapter.POST, requestBody, Constants.getHeaders());
+        NetworkAdapter.httpRequest(
+                String.format(
+                        Constants.ADD_CHILD_URL,
+                        Constants.prefs.getInt("parent_id", 0)),
+                NetworkAdapter.POST,
+                requestBody,
+                Constants.getHeaders());
     }
 
     public static JSONObject getFoodHistory(int mealType, int childPos) {
@@ -173,6 +180,26 @@ public class ChildDao {
         ChildRepo.setCurrentChildById(id);
     }
 
+    public static void AddFoodToDb(Food food){
+
+        JSONObject requestBody = null;
+        try {
+            requestBody = new JSONObject(
+                    (String.format("{\"name\":\"%s\",\"quanity\":\"%d\",\"meal\":%s\",\"category\":%s\",\"date_added\":%s\",\"date_updated\":%s\"}",
+                            food.getName(),
+                            food.getQuantity(),
+                            food.getMeal(),
+                            food.getCategory(),
+                            food.getDateAdded(),
+                            food.getDateUpdated())));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+       String url = String.format(Constants.FOOD_ENTRIES_UPDATE_URL, ChildDao.getCurrentChild().getId());
+        NetworkAdapter.httpRequest(url, NetworkAdapter.POST, requestBody, Constants.getHeaders());
+    }
+
     public static Child getChildByName(String childrenName) {
         return ChildRepo.getChildByName(childrenName);
     }
@@ -191,7 +218,8 @@ public class ChildDao {
         int childId = 0;
 
 
-        String result = NetworkAdapter.httpRequest(String.format(Constants.FOOD_ENTRIES_ID_TIME, ChildDao.getCurrentChild().getId()), NetworkAdapter.GET, Constants.getHeaders());
+        String url = String.format(Constants.FOOD_ENTRIES_UPDATE_URL, ChildDao.getCurrentChild().getId());
+        String result = NetworkAdapter.httpRequest(url, NetworkAdapter.GET, Constants.getHeaders());
 
         try {
             JSONArray jsonArray = new JSONArray(result);
@@ -216,5 +244,36 @@ public class ChildDao {
             e.printStackTrace();
         }
 
+    }
+
+    public static void CreateFoodFromIntArr(int[] addFoodArray) {
+        for(int i = 0; i < 6; ++i){
+           AddFoodToDb(new Food(
+                   Constants.FOOD_TYPES[i],
+                   Constants.MEAL_TYPES[Parent.getMealIndex()],
+                   addFoodArray[i],
+                   ChildDao.getCurrentChild().getId()));
+        }
+    }
+
+    public static void loadFirstChild() {
+
+        String firstChildName = Constants.prefs.getString("first_child_name", "Default");
+        int firstChildId = Constants.prefs.getInt("first_child_id", 0);
+
+        if(firstChildId != 0){
+            Constants.FIRST_CHILD_LOADED = true;
+        }
+        addChild(new Child(firstChildName,firstChildId));
+        setCurrentChildId(firstChildId);
+
+
+    }
+
+    public static void AddFood(int[] addFoodArray) {
+        for(int i = 0; i < addFoodArray.length; i++){
+            AddFoodToDb(new Food(Constants.FOOD_TYPES[i], Constants.MEAL_TYPES[Parent.getMealIndex()], addFoodArray[i], getCurrentChild().getId()));
+            ChildRepo.addFood(i, addFoodArray[i]);
+        }
     }
 }

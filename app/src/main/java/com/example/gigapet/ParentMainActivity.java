@@ -2,6 +2,8 @@ package com.example.gigapet;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -26,9 +28,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.StaticLabelsFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -220,20 +224,21 @@ public class ParentMainActivity extends AppCompatActivity {
     public static void loadHistoryData() {
         //TODO: pull in history data based on currentChildIndex
         //JSONObject jsonObject =  ChildDao.getFoodHistory();
-        LineGraphSeries<DataPoint> seriesSwith = new LineGraphSeries<>();
+        BarGraphSeries<DataPoint> seriesSwith = new BarGraphSeries<>();
         List<SliceValue> pieData = new ArrayList<>();
+        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
 
         switch (fragmentCounter) {
             case 2:
                 pieData = new ArrayList<>();
-                pieData.add(new SliceValue(34, Color.YELLOW));
-                pieData.add(new SliceValue(34, Color.BLUE));
-                pieData.add(new SliceValue(20, Color.RED));
-                pieData.add(new SliceValue(54, Color.GREEN));
-                pieData.add(new SliceValue(54, Color.GREEN));
-                pieData.add(new SliceValue(54, Color.GREEN));
+                pieData.add(new SliceValue(34, Color.RED));
+                pieData.add(new SliceValue(34, Color.GREEN));
+                pieData.add(new SliceValue(20, Color.YELLOW));
+                pieData.add(new SliceValue(54, Color.BLUE));
+                pieData.add(new SliceValue(54, Color.GRAY));
+                pieData.add(new SliceValue(54, Color.MAGENTA));
 
-                seriesSwith = new LineGraphSeries<>(new DataPoint[]{
+                seriesSwith = new BarGraphSeries<>(new DataPoint[]{
                         new DataPoint(0, 2),
                         new DataPoint(1, 4),
                         new DataPoint(2, 3),
@@ -241,34 +246,42 @@ public class ParentMainActivity extends AppCompatActivity {
                         new DataPoint(4, 2),
                         new DataPoint(5, 3),
                         new DataPoint(6, 2)});
+                graphView.getViewport().setMaxX(7);
+                graphView.getViewport().setMinX(7);
+                staticLabelsFormatter.setHorizontalLabels(new String[]{
+                        "Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"});
                 break;
             case 3:
 
                 pieData = new ArrayList<>();
-                pieData.add(new SliceValue(34, Color.YELLOW));
-                pieData.add(new SliceValue(34, Color.BLUE));
-                pieData.add(new SliceValue(20, Color.RED));
-                pieData.add(new SliceValue(54, Color.GREEN));
-                pieData.add(new SliceValue(20, Color.RED));
-                pieData.add(new SliceValue(54, Color.GREEN));
+                pieData.add(new SliceValue(34, Color.RED));
+                pieData.add(new SliceValue(34, Color.GREEN));
+                pieData.add(new SliceValue(20, Color.YELLOW));
+                pieData.add(new SliceValue(54, Color.BLUE));
+                pieData.add(new SliceValue(20, Color.GRAY));
+                pieData.add(new SliceValue(54, Color.MAGENTA));
 
-                seriesSwith = new LineGraphSeries<>(new DataPoint[]{
+                seriesSwith = new BarGraphSeries<>(new DataPoint[]{
                         new DataPoint(0, 2),
                         new DataPoint(1, 4),
                         new DataPoint(2, 3),
                         new DataPoint(6, 2)});
+                graphView.getViewport().setMaxX(4);
+                graphView.getViewport().setMinX(4);
+                staticLabelsFormatter.setHorizontalLabels(new String[]{
+                        "Week - 1", "Week - 2", "Week - 3", "Week - 4"});
                 break;
             case 4: //load weekly data
 
                 pieData = new ArrayList<>();
-                pieData.add(new SliceValue(34, Color.YELLOW));
-                pieData.add(new SliceValue(34, Color.BLUE));
-                pieData.add(new SliceValue(20, Color.RED));
-                pieData.add(new SliceValue(54, Color.GREEN));
-                pieData.add(new SliceValue(20, Color.RED));
-                pieData.add(new SliceValue(54, Color.GREEN));
+                pieData.add(new SliceValue(34, Color.RED));
+                pieData.add(new SliceValue(34, Color.GREEN));
+                pieData.add(new SliceValue(20, Color.YELLOW));
+                pieData.add(new SliceValue(54, Color.BLUE));
+                pieData.add(new SliceValue(20, Color.GRAY));
+                pieData.add(new SliceValue(54, Color.MAGENTA));
 
-                seriesSwith = new LineGraphSeries<>(new DataPoint[]{
+                seriesSwith = new BarGraphSeries<>(new DataPoint[]{
                         new DataPoint(0, 2),
                         new DataPoint(1, 4),
                         new DataPoint(2, 3),
@@ -281,8 +294,13 @@ public class ParentMainActivity extends AppCompatActivity {
                         new DataPoint(9, 2),
                         new DataPoint(10, 3),
                         new DataPoint(11, 2)});
+                graphView.getViewport().setMaxX(12);
+                graphView.getViewport().setMinX(12);
+                staticLabelsFormatter.setHorizontalLabels(new String[]{
+                        "Jan", "Feb", "Mar", "Apr", "May", "June",
+                        "July", "Aug", "Sep", "Oct", "Nov", "Dec"});
                 break;
-            case 1: //load monthly data
+            case 1:
                 break;
         }
 
@@ -292,24 +310,25 @@ public class ParentMainActivity extends AppCompatActivity {
         pieChartView.setPieChartData(pieChartData);
 
         graphView.addSeries(seriesSwith);
-      //  graphView.getViewport().setMaxX(6);
 
         //StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
-       // staticLabelsFormatter.setHorizontalLabels(new String[]{"Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"});
-       // graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+        // staticLabelsFormatter.setHorizontalLabels(new String[]{"Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"});
 
-       // graphView.getViewport().setXAxisBoundsManual(true);
+        graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
+        graphView.getViewport().setXAxisBoundsManual(true);
     }
 
 
-    public static class AddFoodFragment extends Fragment {
+    public static class AddFoodFragment extends Fragment implements View.OnClickListener {
         public static final String ARG_ITEM_ID = "item_id";
         AddFoodListAdapter listAdapter;
         RecyclerView recyclerView;
         Button btnMealBreakfast;
         Button btnMealLunch;
         Button btnMealDinner;
-        Button btnAddFood;
+        Button btnSubmitFood;
+        Boolean foodGroupSelected = false;
 
         public AddFoodFragment() {
         }
@@ -328,55 +347,67 @@ public class ParentMainActivity extends AppCompatActivity {
             btnMealBreakfast = rootView.findViewById(R.id.meal_type_breakfast);
             btnMealLunch = rootView.findViewById(R.id.meal_type_lunch);
             btnMealDinner = rootView.findViewById(R.id.meal_type_dinner);
-            int[] foodItems = new int[6];
+            btnSubmitFood = rootView.findViewById(R.id.btn_submit_add_food);
 
-            btnAddFood = rootView.findViewById(R.id.btn_submit_add_food);
 
-            btnAddFood.setOnClickListener(new View.OnClickListener() {
+            btnSubmitFood.setOnClickListener(this);
+            {
+
+
+                btnMealBreakfast.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btnMealBreakfast.setBackgroundResource(R.color.colorAccent);
+                        btnMealLunch.setBackgroundResource(R.color.colorPrimary);
+                        btnMealDinner.setBackgroundResource(R.color.colorPrimary);
+                        Parent.setMealIndex(Constants.MEAL_TYPE_BREAKFAST);
+                        foodGroupSelected = true;
+                    }
+                });
+
+                btnMealLunch.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btnMealBreakfast.setBackgroundResource(R.color.colorPrimary);
+                        btnMealLunch.setBackgroundResource(R.color.colorAccent);
+                        btnMealDinner.setBackgroundResource(R.color.colorPrimary);
+                        Parent.setMealIndex(Constants.MEAL_TYPE_LUNCH);
+                        foodGroupSelected = true;
+                    }
+                });
+
+                btnMealDinner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btnMealBreakfast.setBackgroundResource(R.color.colorPrimary);
+                        btnMealLunch.setBackgroundResource(R.color.colorPrimary);
+                        btnMealDinner.setBackgroundResource(R.color.colorAccent);
+                        Parent.setMealIndex(Constants.MEAL_TYPE_DINNER);
+                        foodGroupSelected = true;
+                    }
+                });
+
+                graphView = rootView.findViewById(R.id.gv_line_graph);
+                recyclerView = rootView.findViewById(R.id.recycler_view_parent_add_food);
+                recyclerView.setHasFixedSize(true);
+                listAdapter = new AddFoodListAdapter();
+                LinearLayoutManager layoutManager = new LinearLayoutManager(rootView.getContext());
+
+                recyclerView.setAdapter(listAdapter);
+                recyclerView.setLayoutManager(layoutManager);
+                return rootView;
+            }
+        }
+
+        @Override
+        public void onClick(View v) {
+            new Thread(new Runnable() {
                 @Override
-                public void onClick(View v) {
-                    //ChildDao.addFood
+                public void run() {
+                    ChildDao.AddFood(Constants.ADD_FOOD_ARRAY);
+                    Constants.ClearFoodArray();
                 }
-            });
-
-            btnMealBreakfast.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    btnMealBreakfast.setBackgroundResource(R.color.colorAccent);
-                    btnMealLunch.setBackgroundResource(R.color.colorPrimary);
-                    btnMealDinner.setBackgroundResource(R.color.colorPrimary);
-                    Parent.setMealIndex(Constants.MEAL_TYPE_BREAKFAST);
-                }
-            });
-
-            btnMealLunch.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    btnMealBreakfast.setBackgroundResource(R.color.colorPrimary);
-                    btnMealLunch.setBackgroundResource(R.color.colorAccent);
-                    btnMealDinner.setBackgroundResource(R.color.colorPrimary);
-                    Parent.setMealIndex(Constants.MEAL_TYPE_LUNCH);
-                }
-            });
-
-            btnMealDinner.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    btnMealBreakfast.setBackgroundResource(R.color.colorPrimary);
-                    btnMealLunch.setBackgroundResource(R.color.colorPrimary);
-                    btnMealDinner.setBackgroundResource(R.color.colorAccent);
-                    Parent.setMealIndex(Constants.MEAL_TYPE_DINNER);
-                }
-            });
-            graphView = rootView.findViewById(R.id.gv_line_graph);
-            recyclerView = rootView.findViewById(R.id.recycler_view_parent_add_food);
-            recyclerView.setHasFixedSize(true);
-            listAdapter = new AddFoodListAdapter();
-            LinearLayoutManager layoutManager = new LinearLayoutManager(rootView.getContext());
-
-            recyclerView.setAdapter(listAdapter);
-            recyclerView.setLayoutManager(layoutManager);
-            return rootView;
+            }).start();
         }
     }
 
@@ -415,7 +446,6 @@ public class ParentMainActivity extends AppCompatActivity {
         }
     }
 
-
     public static class WeeklyHistoryFragment extends Fragment {
         public static final String ARG_ITEM_ID = "item_id";
         TextView tvCurrentChildName;
@@ -448,7 +478,6 @@ public class ParentMainActivity extends AppCompatActivity {
             return rootView;
         }
     }
-
 
     public static class MonthlyHistoryFragment extends Fragment {
         public static final String ARG_ITEM_ID = "item_id";
@@ -501,7 +530,7 @@ public class ParentMainActivity extends AppCompatActivity {
         @Nullable
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_add_child, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_add_child, container, false);
             btnAddChild = rootView.findViewById(R.id.button_add_child_fragment);
             etAddChild = rootView.findViewById(R.id.et_add_child_fragment);
 
@@ -515,7 +544,8 @@ public class ParentMainActivity extends AppCompatActivity {
                             ChildDao.importChildrenFromDb();
                         }
                     }).start();
-
+                    Toast.makeText(rootView.getContext(), etAddChild.getText().toString() + "  Has Been Added", Toast.LENGTH_SHORT).show();
+                    etAddChild.setText("");
                 }
             });
             return rootView;
@@ -551,8 +581,8 @@ public class ParentMainActivity extends AppCompatActivity {
         }
     }
 
-
     public static class SelectChildFragment extends Fragment {
+
         public static final String ARG_ITEM_ID = "item_id";
         SelectChildListAdapter listAdapter;
         RecyclerView recyclerView;

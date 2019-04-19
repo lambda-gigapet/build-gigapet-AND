@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ChildRepo {
     private static ArrayList<Child> children = new ArrayList<>();
-    private static int currentChildId;
+    private static int currentChildId = 0;
 
     public ChildRepo(ArrayList<Child> children) {
         this.children = children;
@@ -21,7 +21,7 @@ public class ChildRepo {
                 return children.get(i);
             }
         }
-        return null;
+        return children.get(0);
     }
 
     public static ArrayList<Child> getChildren() {
@@ -79,5 +79,9 @@ public class ChildRepo {
             }
         }
         return null;
+    }
+
+    public static void addFood(int type, int amount) {
+        getChildById(getCurrentChildId()).addFood(type, amount);
     }
 }

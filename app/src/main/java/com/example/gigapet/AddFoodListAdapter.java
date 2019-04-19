@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class AddFoodListAdapter extends RecyclerView.Adapter<AddFoodListAdapter.ViewHolder> {
 
-    public AddFoodListAdapter(){
+    public AddFoodListAdapter() {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -39,6 +39,7 @@ public class AddFoodListAdapter extends RecyclerView.Adapter<AddFoodListAdapter.
             vParentView = itemView.findViewById(R.id.recycler_view_item_add_food);
         }
     }
+
     @NonNull
     @Override
     public AddFoodListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
@@ -47,28 +48,27 @@ public class AddFoodListAdapter extends RecyclerView.Adapter<AddFoodListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AddFoodListAdapter.ViewHolder viewHolder, int i) {
-
-        int[] foodAmountArr = ChildDao.getCurrentChild().getAllFood();
-
-        viewHolder.tvFoodAmount.setText(String.valueOf(foodAmountArr[i]));
+    public void onBindViewHolder(@NonNull final AddFoodListAdapter.ViewHolder viewHolder, int i) {
+        viewHolder.tvFoodAmount.setText(String.valueOf(Constants.ADD_FOOD_ARRAY[i]));
         viewHolder.ivFoodImage.setImageResource(DrawableResolver.getDrawableImageIcon(i));
         viewHolder.ivFoodBackground.setImageResource(DrawableResolver.getDrawableIcon(i));
         final int position = i;
         viewHolder.ivMinusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ChildDao.getCurrentChild().getFoodById(position) > 0) {
-                    ChildDao.getCurrentChild().removeFood(position, 1);
-                    notifyDataSetChanged();
+                if (Constants.ADD_FOOD_ARRAY[position] > 0) {
+                    Constants.ADD_FOOD_ARRAY[position]--;
+                    viewHolder.tvFoodAmount.setText(String.valueOf(Constants.ADD_FOOD_ARRAY[position]));
                 }
+                notifyDataSetChanged();
             }
         });
         viewHolder.ivPlusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    ChildDao.getCurrentChild().addFood(position, 1);
-                    notifyDataSetChanged();
+                Constants.ADD_FOOD_ARRAY[position]++;
+                viewHolder.tvFoodAmount.setText(String.valueOf(Constants.ADD_FOOD_ARRAY[position]));
+                notifyDataSetChanged();
             }
         });
 

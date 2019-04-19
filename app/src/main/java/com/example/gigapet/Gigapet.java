@@ -11,6 +11,7 @@ public class Gigapet {
     private String sadImg;
     private String sickImg;
     private String eatingImg;
+    private int state;
 
     public Gigapet(String name, int id) {
         this.name = name;
@@ -43,37 +44,19 @@ public class Gigapet {
 
 
     public void feed(int foodType) {
-        switch (foodType) {
-            case 1:
-                eatHealthyFood();
-                break;
-            case 2:
-                eatHealthyFood();
-                break;
-            case 3:
-                eatHealthyFood();
-                break;
-            case 4:
-                eatHealthyFood();
-                break;
-            case 5:
-                eatHealthyFood();
-                break;
-            case 6:
-                eatSweets();
-                break;
-        }
-
+            state = foodType;
     }
 
-    private void eatHealthyFood() {
-
-    }
-    private void eatSweets() {
-
-    }
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
     public void setExp(int exp) {
@@ -101,39 +84,23 @@ public class Gigapet {
         return happyImg;
     }
 
-    public void setHappyImg(String happyImg) {
-        this.happyImg = happyImg;
-    }
-
     public String getOkImg() {
         return okImg;
-    }
-
-    public void setOkImg(String okImg) {
-        this.okImg = okImg;
     }
 
     public String getSadImg() {
         return sadImg;
     }
-
-    public void setSadImg(String sadImg) {
-        this.sadImg = sadImg;
+    public void addExp(){
+        exp = exp + 1;
     }
 
     public String getSickImg() {
         return sickImg;
     }
 
-    public void setSickImg(String sickImg) {
-        this.sickImg = sickImg;
-    }
-
     public String getEatingImg() {
         return eatingImg;
     }
 
-    public void setEatingImg(String eatingImg) {
-        this.eatingImg = eatingImg;
-    }
 }

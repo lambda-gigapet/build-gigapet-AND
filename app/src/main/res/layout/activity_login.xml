@@ -9,6 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/login_background"
     tools:context=".LoginActivity">
 
     <!-- Login progress -->
@@ -53,13 +54,13 @@
                 android:layout_height="wrap_content">
                 <EditText
                     android:id="@+id/username"
+                    android:background="#aaffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Username"
                     android:imeActionId="6"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true" />
             </android.support.design.widget.TextInputLayout>
@@ -70,6 +71,7 @@
 
                 <EditText
                     android:id="@+id/password"
+                    android:background="#aaffffff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
@@ -86,17 +88,18 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:background="#aaffffff"
+                android:layout_height="50dp">
             <EditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:background="#aaffffff"
                 android:hint="Name"
+                android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:imeActionId="6"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true" />
 
@@ -107,7 +110,8 @@
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:background="@drawable/treat_icon"
+                android:layout_height="50dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in_short"
                 android:textStyle="bold" />
@@ -115,7 +119,8 @@
                 android:id="@+id/register_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:background="@drawable/treat_icon"
+                android:layout_height="50dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_register"
                 android:textStyle="bold" />
@@ -124,8 +129,9 @@
                 android:id="@+id/register_finalize_button"
                 style="?android:textAppearanceSmall"
                 android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:background="@drawable/treat_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="16dp"
                 android:text="Create New Account"
                 android:textStyle="bold" />
@@ -135,7 +141,8 @@
                 style="?android:textAppearanceSmall"
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:background="@drawable/treat_icon"
+                android:layout_height="50dp"
                 android:layout_marginTop="16dp"
                 android:text="Back To Login"
                 android:textStyle="bold" />
