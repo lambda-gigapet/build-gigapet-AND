@@ -1,6 +1,14 @@
 package com.example.gigapet;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,35 +24,163 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.zip.Inflater;
+
+import lecho.lib.hellocharts.model.PieChartData;
+import lecho.lib.hellocharts.model.SliceValue;
+import lecho.lib.hellocharts.view.PieChartView;
 
 public class ParentMainActivity extends AppCompatActivity {
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
-    private static int spinnerChildCurrentSelection;
-    private static int spinnerMealTypeCurrentSelection;
-
+    static GraphView graphView;
+    static PieChartView pieChartView;
+    static int fragmentCounter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent_main);
+        fragmentCounter = 1;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        Button foodButton = findViewById(R.id.food_config_button);
+        foodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadAddFoodFragment();
+            }
+        });
+
+        Button dailyHistoryButton = findViewById(R.id.daily_button);
+        dailyHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                loadDailyFragment();
+            }
+        });
+
+        Button monthlyHistoryButton = findViewById(R.id.monthly_button);
+        monthlyHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadMonthlyFragment();
+            }
+        });
+
+        Button weeklyHistoryButton = findViewById(R.id.weekly_button);
+        weeklyHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadWeeklyFragment();
+            }
+        });
+
+        loadAddFoodFragment();
+
+    }
+
+    public void loadWeeklyFragment() {
+        fragmentCounter = 3;
+        Bundle arguments = new Bundle();
+        arguments.putString(WeeklyHistoryFragment.ARG_ITEM_ID,
+                getIntent().getStringExtra(WeeklyHistoryFragment.ARG_ITEM_ID));
+        WeeklyHistoryFragment fragment = new WeeklyHistoryFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
+    public void loadMonthlyFragment() {
+        fragmentCounter = 4;
+        Bundle arguments = new Bundle();
+        arguments.putString(MonthlyHistoryFragment.ARG_ITEM_ID,
+                getIntent().getStringExtra(MonthlyHistoryFragment.ARG_ITEM_ID));
+        MonthlyHistoryFragment fragment = new MonthlyHistoryFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
+    public void loadDailyFragment() {
+        fragmentCounter = 2;
+        Bundle arguments = new Bundle();
+        arguments.putString(DailyHistoryFragment.ARG_ITEM_ID,
+                getIntent().getStringExtra(DailyHistoryFragment.ARG_ITEM_ID));
+        DailyHistoryFragment fragment = new DailyHistoryFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
+    public void loadAddFoodFragment() {
+        fragmentCounter = 1;
+        Bundle arguments = new Bundle();
+        arguments.putString(AddFoodFragment.ARG_ITEM_ID,
+                getIntent().getStringExtra(AddFoodFragment.ARG_ITEM_ID));
+        AddFoodFragment fragment = new AddFoodFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
+    public void loadSelectChildFragment() {
+        fragmentCounter = 5;
+        Bundle arguments = new Bundle();
+        arguments.putString(SelectChildFragment.ARG_ITEM_ID,
+                getIntent().getStringExtra(SelectChildFragment.ARG_ITEM_ID));
+        SelectChildFragment fragment = new SelectChildFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
+    public void loadRemoveChildFragment() {
+        fragmentCounter = 6;
+        Bundle arguments = new Bundle();
+        arguments.putString(RemoveChildFragment.ARG_ITEM_ID,
+                getIntent().getStringExtra(RemoveChildFragment.ARG_ITEM_ID));
+        RemoveChildFragment fragment = new RemoveChildFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
+    public void loadAddChildFragment() {
+        fragmentCounter = 7;
+        Bundle arguments = new Bundle();
+        arguments.putString(AddChildFragment.ARG_ITEM_ID,
+                getIntent().getStringExtra(AddChildFragment.ARG_ITEM_ID));
+        AddChildFragment fragment = new AddChildFragment();
+        fragment.setArguments(arguments);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
     }
 
     @Override
@@ -56,245 +192,418 @@ public class ParentMainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_select_child:
+                loadSelectChildFragment();
+                break;
+            case R.id.action_add_child:
+                loadAddChildFragment();
+                break;
+            case R.id.action_remove_child:
+                loadRemoveChildFragment();
+                break;
+            case R.id.action_mealtype_all:
+                Parent.setMealIndex(Constants.MEAL_TYPE_ALL);
+                break;
+            case R.id.action_mealtype_breakfast:
+                Parent.setMealIndex(Constants.MEAL_TYPE_BREAKFAST);
+                break;
+            case R.id.action_mealtype_lunch:
+                Parent.setMealIndex(Constants.MEAL_TYPE_LUNCH);
+                break;
+            case R.id.action_mealtype_dinner:
+                Parent.setMealIndex(Constants.MEAL_TYPE_DINNER);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
-    public static class PlaceholderFragment extends Fragment {
-        static GraphView graphView;
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
-        public PlaceholderFragment() {
+
+    public static void loadHistoryData() {
+        //TODO: pull in history data based on currentChildIndex
+        BarGraphSeries<DataPoint> seriesSwith = new BarGraphSeries<>();
+        List<SliceValue> pieData = new ArrayList<>();
+        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
+
+        switch (fragmentCounter) {
+            case 2:
+                pieData = new ArrayList<>();
+                pieData.add(new SliceValue(34, Color.RED));
+                pieData.add(new SliceValue(34, Color.MAGENTA));
+                pieData.add(new SliceValue(20, Color.YELLOW));
+                pieData.add(new SliceValue(54, Color.GREEN));
+                pieData.add(new SliceValue(54, Color.CYAN));
+                pieData.add(new SliceValue(54, Color.BLUE));
+
+                seriesSwith = new BarGraphSeries<>(new DataPoint[]{
+                        new DataPoint(0, 2),
+                        new DataPoint(1, 4),
+                        new DataPoint(2, 3),
+                        new DataPoint(3, 5),
+                        new DataPoint(4, 2),
+                        new DataPoint(5, 3),
+                        new DataPoint(6, 2)});
+                graphView.getViewport().setMaxX(7);
+                graphView.getViewport().setMinX(7);
+                staticLabelsFormatter.setHorizontalLabels(new String[]{
+                        "Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"});
+                break;
+            case 3:
+
+                pieData = new ArrayList<>();
+                pieData.add(new SliceValue(35, Color.RED));
+                pieData.add(new SliceValue(84, Color.MAGENTA));
+                pieData.add(new SliceValue(20, Color.YELLOW));
+                pieData.add(new SliceValue(24, Color.GREEN));
+                pieData.add(new SliceValue(70, Color.CYAN));
+                pieData.add(new SliceValue(14, Color.BLUE));
+
+                seriesSwith = new BarGraphSeries<>(new DataPoint[]{
+                        new DataPoint(0, 2),
+                        new DataPoint(1, 4),
+                        new DataPoint(2, 3),
+                        new DataPoint(6, 2)});
+                graphView.getViewport().setMaxX(4);
+                graphView.getViewport().setMinX(4);
+                staticLabelsFormatter.setHorizontalLabels(new String[]{
+                        "Week - 1", "Week - 2", "Week - 3", "Week - 4"});
+                break;
+            case 4:
+
+                pieData = new ArrayList<>();
+                pieData.add(new SliceValue(37, Color.RED));
+                pieData.add(new SliceValue(22, Color.MAGENTA));
+                pieData.add(new SliceValue(60, Color.YELLOW));
+                pieData.add(new SliceValue(24, Color.GREEN));
+                pieData.add(new SliceValue(80, Color.CYAN));
+                pieData.add(new SliceValue(14, Color.BLUE));
+
+                seriesSwith = new BarGraphSeries<>(new DataPoint[]{
+                        new DataPoint(0, 2),
+                        new DataPoint(1, 4),
+                        new DataPoint(2, 3),
+                        new DataPoint(3, 5),
+                        new DataPoint(4, 2),
+                        new DataPoint(5, 3),
+                        new DataPoint(6, 4),
+                        new DataPoint(7, 3),
+                        new DataPoint(8, 5),
+                        new DataPoint(9, 2),
+                        new DataPoint(10, 3),
+                        new DataPoint(11, 2)});
+                graphView.getViewport().setMaxX(12);
+                graphView.getViewport().setMinX(12);
+                staticLabelsFormatter.setHorizontalLabels(new String[]{
+                        "Jan", "Feb", "Mar", "Apr", "May", "June",
+                        "July", "Aug", "Sep", "Oct", "Nov", "Dec"});
+                break;
+            case 1:
+                break;
         }
 
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
+
+        PieChartData pieChartData = new PieChartData(pieData);
+
+        pieChartView.setPieChartData(pieChartData);
+        seriesSwith.setAnimated(true);
+        graphView.addSeries(seriesSwith);
+
+        graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
+        graphView.getViewport().setXAxisBoundsManual(true);
+    }
+
+
+    public static class AddFoodFragment extends Fragment implements View.OnClickListener {
+        public static final String ARG_ITEM_ID = "item_id";
+        AddFoodListAdapter listAdapter;
+        RecyclerView recyclerView;
+        Button btnMealBreakfast;
+        Button btnMealLunch;
+        Button btnMealDinner;
+        Button btnSubmitFood;
+        Boolean foodGroupSelected = false;
+
+        public AddFoodFragment() {
         }
 
-        public static void loadHistoryData(int mealPos, int childPos) {
-            //TODO: pull in history data based on currentChildIndex
-            JSONObject jsonObject =  ChildDao.getFoodHistory(mealPos, childPos);
-            switch (mealPos) {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
+        @Nullable
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_parent_food_config, container, false);
+            btnMealBreakfast = rootView.findViewById(R.id.meal_type_breakfast);
+            btnMealLunch = rootView.findViewById(R.id.meal_type_lunch);
+            btnMealDinner = rootView.findViewById(R.id.meal_type_dinner);
+            btnSubmitFood = rootView.findViewById(R.id.btn_submit_add_food);
+
+            btnSubmitFood.setOnClickListener(this);
+            {
+
+                btnMealBreakfast.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btnMealBreakfast.setBackgroundResource(R.drawable.breakfast_button_select);
+                        btnMealLunch.setBackgroundResource(R.drawable.lunch_background);
+                        btnMealDinner.setBackgroundResource(R.drawable.dinner_background);
+                        Parent.setMealIndex(Constants.MEAL_TYPE_BREAKFAST);
+                        foodGroupSelected = true;
+                    }
+                });
+
+                btnMealLunch.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btnMealBreakfast.setBackgroundResource(R.drawable.breakfast_button_background);
+                        btnMealLunch.setBackgroundResource(R.drawable.lunch_background_selected);
+                        btnMealDinner.setBackgroundResource(R.drawable.dinner_background);
+                        Parent.setMealIndex(Constants.MEAL_TYPE_LUNCH);
+                        foodGroupSelected = true;
+                    }
+                });
+
+                btnMealDinner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        btnMealBreakfast.setBackgroundResource(R.drawable.breakfast_button_background);
+                        btnMealLunch.setBackgroundResource(R.drawable.lunch_background);
+                        btnMealDinner.setBackgroundResource(R.drawable.dinner_background_selected);
+                        Parent.setMealIndex(Constants.MEAL_TYPE_DINNER);
+                        foodGroupSelected = true;
+                    }
+                });
+
+                graphView = rootView.findViewById(R.id.gv_line_graph);
+                recyclerView = rootView.findViewById(R.id.recycler_view_parent_add_food);
+                recyclerView.setHasFixedSize(true);
+                listAdapter = new AddFoodListAdapter();
+                LinearLayoutManager layoutManager = new LinearLayoutManager(rootView.getContext());
+
+                recyclerView.setAdapter(listAdapter);
+                recyclerView.setLayoutManager(layoutManager);
+                return rootView;
             }
-            LineGraphSeries<DataPoint> series1 = new LineGraphSeries<>(new DataPoint[]{
-                    new DataPoint(0,2),
-                    new DataPoint(1,4),
-                    new DataPoint(2,3),
-                    new DataPoint(3,5),
-                    new DataPoint(4,2),
-                    new DataPoint(5,3),
-                    new DataPoint(6,2)
-            });
-
-            LineGraphSeries<DataPoint> series2 = new LineGraphSeries<>(new DataPoint[]{
-                    new DataPoint(0,1),
-                    new DataPoint(1,6),
-                    new DataPoint(2,2),
-                    new DataPoint(3,3),
-                    new DataPoint(4,6),
-                    new DataPoint(5,2),
-                    new DataPoint(6,1)
-            });
-            graphView.addSeries(series1);
-            graphView.addSeries(series2);
-            graphView.getViewport().setMaxX(6);
-            graphView.getViewport().setXAxisBoundsManual(true);
         }
-
-
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView;
-            TextView textView;
-            if (getArguments().getInt(ARG_SECTION_NUMBER) != 1) {
-                rootView = inflater.inflate(R.layout.fragment_parent_history, container, false);
-                textView = rootView.findViewById(R.id.tv_history_time);
-                graphView = rootView.findViewById(R.id.gv_line_graph);
-
-                loadHistoryData(setMealSpinner(rootView).getSelectedItemPosition(), setChildSpinner(rootView).getSelectedItemPosition());
-
-                String fragmentTitle = "default";
-                switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
-                    case 2:
-                        fragmentTitle = "Daily";
-                        break;
-                    case 3:
-                        fragmentTitle = "Weekly";
-                        break;
-                    case 4:
-                        fragmentTitle = "Monthly";
-                        break;
+        public void onClick(View v) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ChildDao.AddFood(Constants.ADD_FOOD_ARRAY);
+                    Constants.ClearFoodArray();
                 }
-                textView.setText(fragmentTitle);
-                loadHistoryData(setMealSpinner(rootView).getSelectedItemPosition(), setChildSpinner(rootView).getSelectedItemPosition());
-            } else {
-                rootView = inflater.inflate(R.layout.fragment_parent_food_config, container, false);
+            }).start();
+        }
+    }
 
 
+    public static class DailyHistoryFragment extends Fragment {
+        public static final String ARG_ITEM_ID = "item_id";
+        TextView tvCurrentChildName;
+        TextView tvMealType;
+        TextView tvTimeFrame;
 
-                ImageView ivFruitPlus = rootView.findViewById(R.id.iv_button_fruit_plus);
-                ImageView ivFruitMinus = rootView.findViewById(R.id.iv_button_fruit_minus);
-                final TextView tvFruitNum = rootView.findViewById(R.id.tv_fruit);
+        public DailyHistoryFragment() {
+        }
 
-                int[] food = ChildDao.getCurrentChild().getAllFood();
-                tvFruitNum.setText(String.valueOf(food[Constants.FOOD_TYPE_FRUIT]));
+        @Nullable
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
 
-                ivFruitPlus.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        tvFruitNum.setText(String.valueOf(Integer.parseInt(tvFruitNum.getText().toString())+1));
-                    }
-                });
-
-                ivFruitMinus.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(Integer.parseInt(tvFruitNum.getText().toString()) > 0) {
-                            tvFruitNum.setText(String.valueOf(Integer.parseInt(tvFruitNum.getText().toString()) - 1));
-                        }
-                    }
-                });
-
-
-                ImageView ivVeggiePlus = rootView.findViewById(R.id.iv_button_veggie_plus);
-                ImageView ivVeggieMinus = rootView.findViewById(R.id.iv_button_veggie_minus);
-                TextView tvVeggieNum = rootView.findViewById(R.id.tv_veggie);
-
-                ImageView ivCarbPlus = rootView.findViewById(R.id.iv_button_carb_plus);
-                ImageView ivCarbMinus = rootView.findViewById(R.id.iv_button_carb_minus);
-                TextView tvCarbNum = rootView.findViewById(R.id.tv_carb);
-
-                ImageView ivDairyPlus = rootView.findViewById(R.id.iv_button_dairy_plus);
-                ImageView ivDairyMinus = rootView.findViewById(R.id.iv_button_dairy_minus);
-                TextView tvDairyNum = rootView.findViewById(R.id.tv_dairy);
-
-                ImageView ivProteinPlus = rootView.findViewById(R.id.iv_button_protein_plus);
-                ImageView ivProteinMinus = rootView.findViewById(R.id.iv_button_protein_minus);
-                TextView tvProteinNum = rootView.findViewById(R.id.tv_protein);
-
-                ImageView ivTreatPlus = rootView.findViewById(R.id.iv_button_treat_plus);
-                ImageView ivTreatMinus = rootView.findViewById(R.id.iv_button_treat_minus);
-                TextView tvTreatNum = rootView.findViewById(R.id.tv_treat);
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_parent_history, container, false);
+            graphView = rootView.findViewById(R.id.gv_line_graph);
+            pieChartView = rootView.findViewById(R.id.pc_pie_chart);
+            tvCurrentChildName = rootView.findViewById(R.id.section_label);
+            tvMealType = rootView.findViewById(R.id.tv_meal_type);
+            tvTimeFrame = rootView.findViewById(R.id.tv_history_time);
+            tvCurrentChildName.setText(ChildDao.getCurrentChild().getName());
+            tvMealType.setText(Constants.MEAL_TYPES[Parent.getMealIndex()]);
+            tvTimeFrame.setText("Daily");
+            loadHistoryData();
 
 
-
-
-                Spinner childSpinner = setChildSpinner(rootView);
-                Spinner mealSpinner = setMealSpinner(rootView);
-
-            }
             return rootView;
         }
-
-        public void updateFoodCount(){
-            int[] food = ChildDao.getCurrentChild().getAllFood();
-            //tvFruitNum.setText(String.valueOf(food[Constants.FOOD_TYPE_FRUIT]));
-        }
-
-        public Spinner setChildSpinner(final View root){
-            final String[] namesArr = new String[Parent.getChildrensNamesAsArray().length + 1];
-            for (int i = 0; i < Parent.getChildrensNamesAsArray().length; ++i) {
-                namesArr[i] = Parent.getChildrensNamesAsArray()[i];
-            }
-            namesArr[Parent.getChildrensNamesAsArray().length] = "Add New Child";
-            final ArrayAdapter<String> spinnerChildArrayAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item,namesArr);
-            spinnerChildArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            final Spinner spinner;
-            if(getArguments().getInt(ARG_SECTION_NUMBER) == 1){
-                spinner = root.findViewById(R.id.spinner_child_select);
-            }else{spinner = root.findViewById(R.id.spinner_child_select_history);}
-
-            spinner.setAdapter(spinnerChildArrayAdapter);
-
-            spinner.setSelection(spinnerChildCurrentSelection);
-
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    spinnerChildCurrentSelection = position;
-                    if(position == namesArr.length-1){
-                        final EditText etChildName = root.findViewById(R.id.et_add_child);
-                        final Button button = root.findViewById(R.id.button_add_child);
-                        //TODO: null object reference
-                        etChildName.setVisibility(View.VISIBLE);
-                        button.setVisibility(View.VISIBLE);
-                        button.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                ChildDao.addChild(new Child(etChildName.getText().toString(), ChildDao.getHighestId()+1));
-                                Parent.setChildIndex(ChildDao.getHighestId());
-                                button.setVisibility(View.GONE);
-                                etChildName.setVisibility(View.GONE);
-                                setChildSpinner(root);
-                                spinnerChildArrayAdapter.notifyDataSetChanged();
-                            }
-                        });
-
-                    }else {Parent.setChildIndex(position);}
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-            return spinner;
-        }
-
-        public Spinner setMealSpinner(View root){
-            final ArrayAdapter<String> spinnerMealArrayAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item,Constants.MEAL_TYPES);
-            spinnerMealArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            final Spinner spinner;
-            if(getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-                spinner = root.findViewById(R.id.spinner_meal_type_food_config);
-            }else{spinner = root.findViewById(R.id.spinner_meal_type);}
-            spinner.setAdapter(spinnerMealArrayAdapter);
-            spinner.setSelection(spinnerMealTypeCurrentSelection);
-
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    spinnerMealTypeCurrentSelection = position;
-                    spinnerMealArrayAdapter.notifyDataSetChanged();
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-            return spinner;
-        }
-
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public static class WeeklyHistoryFragment extends Fragment {
+        public static final String ARG_ITEM_ID = "item_id";
+        TextView tvCurrentChildName;
+        TextView tvMealType;
+        TextView tvTimeFrame;
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+        public WeeklyHistoryFragment() {
         }
 
+        @Nullable
         @Override
-        public Fragment getItem(int position) {
-            return PlaceholderFragment.newInstance(position + 1);
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
         }
 
+        @Nullable
         @Override
-        public int getCount() {
-            return 4;
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_parent_history, container, false);
+            graphView = rootView.findViewById(R.id.gv_line_graph);
+            pieChartView = rootView.findViewById(R.id.pc_pie_chart);
+            tvCurrentChildName = rootView.findViewById(R.id.section_label);
+            tvMealType = rootView.findViewById(R.id.tv_meal_type);
+            tvTimeFrame = rootView.findViewById(R.id.tv_history_time);
+            tvCurrentChildName.setText(ChildDao.getCurrentChild().getName());
+            tvMealType.setText(Constants.MEAL_TYPES[Parent.getMealIndex()]);
+            tvTimeFrame.setText("Weekly");
+            loadHistoryData();
+
+            return rootView;
         }
     }
 
+    public static class MonthlyHistoryFragment extends Fragment {
+        public static final String ARG_ITEM_ID = "item_id";
+        TextView tvCurrentChildName;
+        TextView tvMealType;
+        TextView tvTimeFrame;
+
+        public MonthlyHistoryFragment() {
+        }
+
+        @Nullable
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_parent_history, container, false);
+            tvCurrentChildName = rootView.findViewById(R.id.section_label);
+            tvMealType = rootView.findViewById(R.id.tv_meal_type);
+            tvTimeFrame = rootView.findViewById(R.id.tv_history_time);
+            graphView = rootView.findViewById(R.id.gv_line_graph);
+            pieChartView = rootView.findViewById(R.id.pc_pie_chart);
+
+            tvCurrentChildName.setText(ChildDao.getCurrentChild().getName());
+            tvMealType.setText(Constants.MEAL_TYPES[Parent.getMealIndex()]);
+            tvTimeFrame.setText("Monthly");
+            loadHistoryData();
+
+            return rootView;
+        }
+    }
+
+    public static class AddChildFragment extends Fragment {
+        public static final String ARG_ITEM_ID = "item_id";
+        Button btnAddChild;
+        EditText etAddChild;
+
+        public AddChildFragment() {
+        }
+
+        @Nullable
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            final View rootView = inflater.inflate(R.layout.fragment_add_child, container, false);
+            btnAddChild = rootView.findViewById(R.id.button_add_child_fragment);
+            etAddChild = rootView.findViewById(R.id.et_add_child_fragment);
+
+            btnAddChild.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ChildDao.addChild(new Child(etAddChild.getText().toString(), ChildDao.getHighestId() + 1));
+                            ChildDao.importChildrenFromDb();
+                        }
+                    }).start();
+                    Toast.makeText(rootView.getContext(), etAddChild.getText().toString() + "  Has Been Added", Toast.LENGTH_SHORT).show();
+                    etAddChild.setText("");
+                }
+            });
+            return rootView;
+        }
+    }
+
+    public static class RemoveChildFragment extends Fragment {
+        public static final String ARG_ITEM_ID = "item_id";
+        RemoveChildListAdapter listAdapter;
+        RecyclerView recyclerView;
+
+        public RemoveChildFragment() {
+        }
+
+        @Nullable
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_remove_child, container, false);
+            recyclerView = rootView.findViewById(R.id.recycler_view_remove_child);
+            recyclerView.setHasFixedSize(true);
+            listAdapter = new RemoveChildListAdapter();
+            LinearLayoutManager layoutManager = new LinearLayoutManager(rootView.getContext());
+
+            recyclerView.setAdapter(listAdapter);
+            recyclerView.setLayoutManager(layoutManager);
+            return rootView;
+        }
+    }
+
+    public static class SelectChildFragment extends Fragment {
+
+        public static final String ARG_ITEM_ID = "item_id";
+        SelectChildListAdapter listAdapter;
+        RecyclerView recyclerView;
+
+        public SelectChildFragment() {
+        }
+
+        @Nullable
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_select_child, container, false);
+            recyclerView = rootView.findViewById(R.id.recycler_view_select_child);
+            recyclerView.setHasFixedSize(true);
+            listAdapter = new SelectChildListAdapter();
+            LinearLayoutManager layoutManager = new LinearLayoutManager(rootView.getContext());
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(listAdapter);
+
+            return rootView;
+        }
+    }
 
 
 }
+

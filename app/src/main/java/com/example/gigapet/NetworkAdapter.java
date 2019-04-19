@@ -15,8 +15,6 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-// S03M03-1 build and test firebase database
-// S03M03-2 Add basic network adapter
 public class NetworkAdapter {
     public static final String GET     = "GET";
     public static final String POST    = "POST";
@@ -28,6 +26,9 @@ public class NetworkAdapter {
 
     static String httpRequest(String urlString) {
         return httpRequest(urlString, GET, null, null);
+    }
+    static String httpRequest(String urlString, String requestMethod, Map<String,String> headerProperties) {
+        return httpRequest(urlString, requestMethod, null, headerProperties);
     }
 
     static String httpRequest(String urlString, String requestMethod) {
@@ -55,9 +56,7 @@ public class NetworkAdapter {
                 }
             }
 
-            // S03M03-10 add support for different types of request
             if((requestMethod.equals(POST) || requestMethod.equals(PUT)) && requestBody != null) {
-                // S03M03-11 write body of post request
                 connection.setDoInput(true);
                 final OutputStream outputStream = connection.getOutputStream();
                 outputStream.write(requestBody.toString().getBytes());
@@ -67,7 +66,9 @@ public class NetworkAdapter {
             }
 
             final int responseCode = connection.getResponseCode();
-            if(responseCode != HttpsURLConnection.HTTP_OK){
+
+
+            if(responseCode != HttpsURLConnection.HTTP_CREATED && responseCode != HttpsURLConnection.HTTP_OK){
                 return null;
             }else{
                 inputStream = connection.getInputStream();

@@ -14,10 +14,22 @@ public class Child {
     }
 
     public Child(String name, int id, Gigapet gigapet) {
+
+        //TODO: save food int array in shared prefs to load
         this.name = name;
         this.id = id;
         this.gigapet = gigapet;
-        foodIntArr = new int[6];
+        foodIntArr = new int[]{0,0,0,0,0,0};
+        getFoodFromDb();
+    }
+
+    public void getFoodFromDb(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+               // ChildDao.LoadFoodEntries();
+            }
+        }).start();
     }
 
     public void setGigapet(Gigapet gigapet) {

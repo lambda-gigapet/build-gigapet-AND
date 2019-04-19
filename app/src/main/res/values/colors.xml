@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#2c9da6</color>
+    <color name="colorPrimaryDark">#9eb1cd</color>
+    <color name="colorAccent">#c63170</color>
+    <color name="colorBG">#efeae9</color>
+    <color name="veggieColor">#c500ff</color>
+    <color name="colorFruit">#fe0000</color>
+    <color name="colorCarb">#f5ff00</color>
+    <color name="colorProtein">#3cf10e</color>
+    <color name="colorDairy">#01ffe5</color>
+    <color name="colorTreats">#0024ff</color>
 </resources>

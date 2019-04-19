@@ -40,7 +40,7 @@ public class DrawableResolver {
         return drawable;
     }
 
-    public static int getDrawableIcon(int category) {
+     public static int getDrawableIcon(int category) {
         int drawable;
         try {
             switch (category) {
@@ -60,7 +60,38 @@ public class DrawableResolver {
                     drawable = R.drawable.protein_icon;
                     break;
                 case 5:
+                    drawable = R.drawable.treat_icon_square;
+                    break;
+                default:
                     drawable = R.drawable.protein_icon;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            drawable = R.drawable.protein_icon;
+        }
+        return drawable;
+    }
+
+    public static int getDrawableImageIcon(int category) {
+        int drawable;
+        try {
+            switch (category) {
+                case 0:
+                    drawable = R.drawable.fruit_apple;
+                    break;
+                case 1:
+                    drawable = R.drawable.veggie_corn;
+                    break;
+                case 2:
+                    drawable = R.drawable.veggie_eggplant;
+                    break;
+                case 3:
+                    drawable = R.drawable.treats_cupcake;
+                    break;
+                case 4:
+                    drawable = R.drawable.treats_icecream_choc;
+                    break;
+                case 5:
+                    drawable = R.drawable.treats_donut;
                     break;
                 default:
                     drawable = R.drawable.protein_icon;
@@ -72,8 +103,10 @@ public class DrawableResolver {
     }
 
 
+
     public static final int[] fruits = new int[]{
-            R.drawable.fruit_apple};
+            R.drawable.fruit_apple,
+            R.drawable.fruit_orange};
 
     public static final int[] veggies = new int[]{
             R.drawable.fruit_banana};

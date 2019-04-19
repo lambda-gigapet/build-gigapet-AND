@@ -69,6 +69,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
+
+        Constants.setSharedPrefs(getApplicationContext());
+
         mEmailView = findViewById(R.id.email);
         populateAutoComplete();
 
@@ -87,6 +90,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        Constants.setSharedPrefs(getApplicationContext());
+        if(!Constants.prefs.getString("username","enterName").equals("enterName")){
+            mUsernameView.setText(Constants.prefs.getString("username", "enterName"));
+        }
+
+        if(!Constants.prefs.getString("password","enterPassword").equals("enterPassword")){
+            mPasswordView.setText(Constants.prefs.getString("password", "enterPassword"));
+        }
+
 
         final Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -103,6 +115,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mRegisterFinalizeButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                attemptRegister();
             }
         });
         final Button mRegisterButton = findViewById(R.id.register_button);
@@ -130,8 +143,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 mRegisterFinalizeButton.setVisibility(View.VISIBLE);
                 mEmailSignInButton.setVisibility(View.GONE);
                 mBackToLogin.setVisibility(View.VISIBLE);
+                mUsernameView.setText("");
+                mPasswordView.setText("");
 
-                // attemptRegister();
+
             }
         });
 
@@ -397,12 +412,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mPassword;
         private int id;
         private String token;
+        private String mJwt;
 
         UserLoginTask(String username, String password) {
             mUsername = username;
             mPassword = password;
             token = "";
             id = -1;
+            mJwt = "";
         }
 
         @Override
@@ -414,7 +431,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         "{\"username\":" + mUsername
                                 + ",\"password\":" + mPassword + "}");
 
-                String response = NetworkAdapter.httpRequest(GigapetDao.getLoginUrl(), NetworkAdapter.POST, requestBody, getHeaders());
+                String response = NetworkAdapter.httpRequest(Constants.LOGIN_URL, NetworkAdapter.POST, requestBody, getHeaders());
                 JSONObject jsonObject = new JSONObject();
                 if (jsonObject == null) {
                     onBackPressed();
@@ -423,14 +440,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Thread.sleep(2000);
                 token = jsonObject.getString("token");
                 id = jsonObject.getInt("id");
+                //  mJwt = jsonObject.getString("jwt");
 
 
                 if (token != "" && id != -1) {
+
+
+                    Constants.editor.putString("token", token);
+                    Constants.editor.putInt("parent_id", id);
+                    Constants.editor.putString("password", mPassword);
+                    Constants.editor.putString("username", mUsername);
+                    //  Constants.editor.putString("jwt", mJwt);
+                    Constants.editor.commit();
+
                     parent = new Parent(id, token);
+
                     Intent intent = new Intent(getApplicationContext(), GigapetMainActivity.class);
                     startActivity(intent);
                 }
-                parent = new Parent(id, token);
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
@@ -441,11 +468,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return true;
         }
 
-        public Map<String, String> getHeaders() {
-            Map<String, String> headerParams = new HashMap<String, String>();
-            headerParams.put("Content-Type", "application/json");
-            return headerParams;
-        }
 
         @Override
         protected void onPostExecute(final Boolean success) {
@@ -460,6 +482,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         }
 
+
+
         @Override
         protected void onCancelled() {
             mAuthTask = null;
@@ -467,6 +491,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    public Map<String, String> getHeaders() {
+        Map<String, String> headerParams = new HashMap<String, String>();
+        headerParams.put("Content-Type", "application/json");
+        return headerParams;
+    }
     public class UserRegisterTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mEmail;
@@ -487,28 +516,48 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
+
             try {
                 JSONObject requestBody = new JSONObject(
-                        "{\"name\":" + mName
-                                + ",\"email\":" + mEmail
-                                + ",\"username\":" + mUsername
-                                + ",\"password\":" + mPassword + "}");
+                        "{\"username\":" + mUsername
+                                + ",\"password\":" + mPassword
+                                + ",\"name\":" + mName
+                                + ",\"email\":" + mEmail +"}");
 
-                JSONObject jsonObject;
-                jsonObject = new JSONObject(NetworkAdapter.httpRequest(GigapetDao.getRegisterUrl(), NetworkAdapter.POST, requestBody));
+                String response = NetworkAdapter.httpRequest(Constants.REGISTER_URL, NetworkAdapter.POST, requestBody, getHeaders());
+                JSONObject jsonObject = new JSONObject();
                 if (jsonObject == null) {
                     onBackPressed();
                 }
+                jsonObject = new JSONObject(response);
                 Thread.sleep(2000);
                 token = jsonObject.getString("token");
                 id = jsonObject.getInt("id");
+                //  mJwt = jsonObject.getString("jwt");
 
 
-            } catch (InterruptedException e) {
-                return false;
+                if (token != "" && id != -1) {
+
+
+                    Constants.editor.putString("token", token);
+                    Constants.editor.putInt("parent_id", id);
+                    Constants.editor.putString("password", mPassword);
+                    Constants.editor.putString("username", mUsername);
+                    //  Constants.editor.putString("jwt", mJwt);
+                    Constants.editor.commit();
+
+                    parent = new Parent(id, token);
+
+                    Intent intent = new Intent(getApplicationContext(), GigapetMainActivity.class);
+                    startActivity(intent);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
+            } catch (InterruptedException e) {
+                return false;
             }
+
+            // TODO: register the new account here.
             return true;
         }
 
@@ -532,4 +581,3 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 }
-
