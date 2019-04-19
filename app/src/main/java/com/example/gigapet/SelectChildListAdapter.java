@@ -34,7 +34,6 @@ public class SelectChildListAdapter extends RecyclerView.Adapter<SelectChildList
             }
         });
 
-
     }
 
     @Override

@@ -5,6 +5,7 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_background"
     android:fitsSystemWindows="true"
     tools:context=".ParentMainActivity">
 
@@ -18,8 +19,9 @@
     <Button
         android:id="@+id/food_config_button"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:text="Add Food"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/add_food"
         app:layout_constraintTop_toBottomOf="@id/appbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/daily_button"/>
@@ -27,8 +29,9 @@
     <Button
         android:id="@+id/daily_button"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:text="Daily"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/daily_background"
         app:layout_constraintTop_toBottomOf="@id/appbar"
         app:layout_constraintLeft_toRightOf="@id/food_config_button"
         app:layout_constraintRight_toLeftOf="@id/weekly_button"/>
@@ -36,8 +39,9 @@
     <Button
         android:id="@+id/weekly_button"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:text="Weekly"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/weekly_background"
         app:layout_constraintTop_toBottomOf="@id/appbar"
         app:layout_constraintLeft_toRightOf="@id/daily_button"
         app:layout_constraintRight_toLeftOf="@id/monthly_button"/>
@@ -45,8 +49,9 @@
     <Button
         android:id="@+id/monthly_button"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:text="Monthly"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/monthly_background"
         app:layout_constraintTop_toBottomOf="@id/appbar"
         app:layout_constraintLeft_toRightOf="@id/weekly_button"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -64,7 +69,6 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_weight="1"
-            android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:title="@string/parent_options">
 

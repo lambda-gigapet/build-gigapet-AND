@@ -5,9 +5,27 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    android:padding="15dp"
+    android:background="@drawable/main_background2"
     tools:context=".ParentMainActivity$DailyHistoryFragment">
+
+
+    <ImageView
+        android:id="@+id/top_border_food"
+    android:background="@drawable/top_border"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    app:layout_constraintBottom_toTopOf="@id/pc_pie_chart"
+    app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/right_side_background"
+        android:background="@drawable/main_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toRightOf="@id/pc_pie_chart"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/gv_line_graph"
+        app:layout_constraintTop_toBottomOf="@id/top_border_food"/>
 
     <TextView
         android:id="@+id/section_label"
@@ -15,8 +33,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginTop="15dp"
         android:text="Food Intake"
         android:textSize="24dp"
+        android:textStyle="bold"
+        android:textColor="#FFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +50,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="WEEKLY"
+        android:textColor="#FFF"
+        android:textStyle="bold"
         android:textSize="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/tv_meal_type"
@@ -39,6 +62,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ALL Meals"
+        android:textStyle="bold"
+        android:textColor="#fff"
         android:textSize="24dp"
         app:layout_constraintLeft_toRightOf="@id/tv_history_time"
         app:layout_constraintRight_toRightOf="parent"
@@ -47,17 +72,21 @@
     <com.jjoe64.graphview.GraphView
         android:id="@+id/gv_line_graph"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="45dp"
+        android:layout_height="268dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="8dp"
+        android:background="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guide_graph_view_split_2" />
+        app:layout_constraintTop_toTopOf="@+id/guide_graph_view_split_2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <lecho.lib.hellocharts.view.PieChartView
         android:id="@+id/pc_pie_chart"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="299dp"
+        android:layout_height="307dp"
         app:layout_constraintBottom_toTopOf="@id/guide_graph_view_split_2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guide_graph_view_split_vertical_1"
@@ -68,47 +97,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="99dp" />
+        app:layout_constraintGuide_percent="0.13" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guide_graph_view_split_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="348dp" />
+        app:layout_constraintGuide_begin="410dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guide_graph_view_split_vertical_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="270dp" />
+        app:layout_constraintGuide_percent="0.73" />
 
-    <Button
-        android:id="@+id/refresh_data"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Refresh"
-        app:layout_constraintBottom_toTopOf="@id/tv_legend_fruits"
-        app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
-        app:layout_constraintRight_toLeftOf="@id/iv_fruits"
-        app:layout_constraintTop_toBottomOf="@id/guide_graph_view_split_1"/>
+
 
     <TextView
         android:id="@+id/tv_legend_fruits"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Fruit"
+        android:layout_marginLeft="15dp"
+        android:textColor="#fff"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_veggies"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_fruits"
-        app:layout_constraintTop_toBottomOf="@id/refresh_data" />
+        app:layout_constraintTop_toTopOf="@id/pc_pie_chart" />
 
     <TextView
         android:id="@+id/tv_legend_veggies"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Veggies"
+        android:textColor="#fff"
+        android:layout_marginLeft="15dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_carbs"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_legend_veggies"
@@ -119,6 +146,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Carbs"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:layout_marginLeft="15dp"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_protein"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_legend_carbs"
@@ -129,6 +159,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Protein"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:layout_marginLeft="15dp"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_dairy"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_legend_protein"
@@ -139,6 +172,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Dairy"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:layout_marginLeft="15dp"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_treats"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_legend_dairy"
@@ -149,6 +185,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Treats"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:layout_marginLeft="15dp"
         app:layout_constraintBottom_toTopOf="@id/guide_graph_view_split_2"
         app:layout_constraintLeft_toRightOf="@id/guide_graph_view_split_vertical_1"
         app:layout_constraintRight_toLeftOf="@id/iv_legend_treats"
@@ -156,19 +195,21 @@
 
     <ImageView
         android:id="@+id/iv_fruits"
-        android:src="@color/colorAccent"
+        android:src="@color/colorFruit"
         android:layout_width="15dp"
+        android:layout_marginRight="15dp"
         android:layout_height="15dp"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_veggies"
         app:layout_constraintLeft_toRightOf="@id/tv_legend_fruits"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/refresh_data" />
+        app:layout_constraintTop_toTopOf="@id/pc_pie_chart" />
 
     <ImageView
         android:id="@+id/iv_legend_veggies"
-        android:src="@color/colorAccent"
+        android:src="@color/veggieColor"
         android:layout_width="15dp"
         android:layout_height="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_carbs"
         app:layout_constraintLeft_toRightOf="@id/tv_legend_veggies"
         app:layout_constraintRight_toRightOf="parent"
@@ -176,9 +217,10 @@
 
     <ImageView
         android:id="@+id/iv_legend_carbs"
-        android:src="@color/colorAccent"
+        android:src="@color/colorCarb"
         android:layout_width="15dp"
         android:layout_height="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_protein"
         app:layout_constraintLeft_toRightOf="@id/tv_legend_carbs"
         app:layout_constraintRight_toRightOf="parent"
@@ -186,9 +228,10 @@
 
     <ImageView
         android:id="@+id/iv_legend_protein"
-        android:src="@color/colorAccent"
+        android:src="@color/colorProtein"
         android:layout_width="15dp"
         android:layout_height="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_dairy"
         app:layout_constraintLeft_toRightOf="@id/tv_legend_protein"
         app:layout_constraintRight_toRightOf="parent"
@@ -196,9 +239,10 @@
 
     <ImageView
         android:id="@+id/iv_legend_dairy"
-        android:src="@color/colorAccent"
+        android:src="@color/colorDairy"
         android:layout_width="15dp"
         android:layout_height="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintBottom_toTopOf="@id/tv_legend_treats"
         app:layout_constraintLeft_toRightOf="@id/tv_legend_dairy"
         app:layout_constraintRight_toRightOf="parent"
@@ -206,9 +250,10 @@
 
     <ImageView
         android:id="@+id/iv_legend_treats"
-        android:src="@color/colorAccent"
+        android:src="@color/colorTreats"
         android:layout_width="15dp"
         android:layout_height="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintBottom_toTopOf="@id/guide_graph_view_split_2"
         app:layout_constraintLeft_toRightOf="@id/tv_legend_treats"
         app:layout_constraintRight_toRightOf="parent"

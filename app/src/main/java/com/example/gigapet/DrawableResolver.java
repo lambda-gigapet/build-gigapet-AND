@@ -105,7 +105,8 @@ public class DrawableResolver {
 
 
     public static final int[] fruits = new int[]{
-            R.drawable.fruit_apple};
+            R.drawable.fruit_apple,
+            R.drawable.fruit_orange};
 
     public static final int[] veggies = new int[]{
             R.drawable.fruit_banana};

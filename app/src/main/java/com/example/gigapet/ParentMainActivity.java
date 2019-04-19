@@ -53,7 +53,6 @@ public class ParentMainActivity extends AppCompatActivity {
     static GraphView graphView;
     static PieChartView pieChartView;
     static int fragmentCounter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,7 +222,6 @@ public class ParentMainActivity extends AppCompatActivity {
 
     public static void loadHistoryData() {
         //TODO: pull in history data based on currentChildIndex
-        //JSONObject jsonObject =  ChildDao.getFoodHistory();
         BarGraphSeries<DataPoint> seriesSwith = new BarGraphSeries<>();
         List<SliceValue> pieData = new ArrayList<>();
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
@@ -231,12 +229,12 @@ public class ParentMainActivity extends AppCompatActivity {
         switch (fragmentCounter) {
             case 2:
                 pieData = new ArrayList<>();
-                pieData.add(new SliceValue(34, Color.RED));
-                pieData.add(new SliceValue(34, Color.GREEN));
-                pieData.add(new SliceValue(20, Color.YELLOW));
-                pieData.add(new SliceValue(54, Color.BLUE));
-                pieData.add(new SliceValue(54, Color.GRAY));
-                pieData.add(new SliceValue(54, Color.MAGENTA));
+                pieData.add(new SliceValue(34, R.color.colorFruit));
+                pieData.add(new SliceValue(34, R.color.veggieColor));
+                pieData.add(new SliceValue(20, R.color.colorCarb));
+                pieData.add(new SliceValue(54, R.color.colorProtein));
+                pieData.add(new SliceValue(54, R.color.colorDairy));
+                pieData.add(new SliceValue(54, R.color.colorTreats));
 
                 seriesSwith = new BarGraphSeries<>(new DataPoint[]{
                         new DataPoint(0, 2),
@@ -254,12 +252,12 @@ public class ParentMainActivity extends AppCompatActivity {
             case 3:
 
                 pieData = new ArrayList<>();
-                pieData.add(new SliceValue(34, Color.RED));
-                pieData.add(new SliceValue(34, Color.GREEN));
-                pieData.add(new SliceValue(20, Color.YELLOW));
-                pieData.add(new SliceValue(54, Color.BLUE));
-                pieData.add(new SliceValue(20, Color.GRAY));
-                pieData.add(new SliceValue(54, Color.MAGENTA));
+                pieData.add(new SliceValue(35, R.color.colorFruit));
+                pieData.add(new SliceValue(84, R.color.veggieColor));
+                pieData.add(new SliceValue(20, R.color.colorCarb));
+                pieData.add(new SliceValue(24, R.color.colorProtein));
+                pieData.add(new SliceValue(70, R.color.colorDairy));
+                pieData.add(new SliceValue(14, R.color.colorTreats));
 
                 seriesSwith = new BarGraphSeries<>(new DataPoint[]{
                         new DataPoint(0, 2),
@@ -271,15 +269,15 @@ public class ParentMainActivity extends AppCompatActivity {
                 staticLabelsFormatter.setHorizontalLabels(new String[]{
                         "Week - 1", "Week - 2", "Week - 3", "Week - 4"});
                 break;
-            case 4: //load weekly data
+            case 4:
 
                 pieData = new ArrayList<>();
-                pieData.add(new SliceValue(34, Color.RED));
-                pieData.add(new SliceValue(34, Color.GREEN));
-                pieData.add(new SliceValue(20, Color.YELLOW));
-                pieData.add(new SliceValue(54, Color.BLUE));
-                pieData.add(new SliceValue(20, Color.GRAY));
-                pieData.add(new SliceValue(54, Color.MAGENTA));
+                pieData.add(new SliceValue(37, R.color.colorFruit));
+                pieData.add(new SliceValue(22, R.color.veggieColor));
+                pieData.add(new SliceValue(60, R.color.colorCarb));
+                pieData.add(new SliceValue(24, R.color.colorProtein));
+                pieData.add(new SliceValue(80, R.color.colorDairy));
+                pieData.add(new SliceValue(14, R.color.colorTreats));
 
                 seriesSwith = new BarGraphSeries<>(new DataPoint[]{
                         new DataPoint(0, 2),
@@ -308,11 +306,8 @@ public class ParentMainActivity extends AppCompatActivity {
         PieChartData pieChartData = new PieChartData(pieData);
 
         pieChartView.setPieChartData(pieChartData);
-
+        seriesSwith.setAnimated(true);
         graphView.addSeries(seriesSwith);
-
-        //StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graphView);
-        // staticLabelsFormatter.setHorizontalLabels(new String[]{"Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"});
 
         graphView.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
@@ -349,17 +344,15 @@ public class ParentMainActivity extends AppCompatActivity {
             btnMealDinner = rootView.findViewById(R.id.meal_type_dinner);
             btnSubmitFood = rootView.findViewById(R.id.btn_submit_add_food);
 
-
             btnSubmitFood.setOnClickListener(this);
             {
-
 
                 btnMealBreakfast.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        btnMealBreakfast.setBackgroundResource(R.color.colorAccent);
-                        btnMealLunch.setBackgroundResource(R.color.colorPrimary);
-                        btnMealDinner.setBackgroundResource(R.color.colorPrimary);
+                        btnMealBreakfast.setBackgroundResource(R.drawable.breakfast_button_select);
+                        btnMealLunch.setBackgroundResource(R.drawable.lunch_background);
+                        btnMealDinner.setBackgroundResource(R.drawable.dinner_background);
                         Parent.setMealIndex(Constants.MEAL_TYPE_BREAKFAST);
                         foodGroupSelected = true;
                     }
@@ -368,9 +361,9 @@ public class ParentMainActivity extends AppCompatActivity {
                 btnMealLunch.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        btnMealBreakfast.setBackgroundResource(R.color.colorPrimary);
-                        btnMealLunch.setBackgroundResource(R.color.colorAccent);
-                        btnMealDinner.setBackgroundResource(R.color.colorPrimary);
+                        btnMealBreakfast.setBackgroundResource(R.drawable.breakfast_button_background);
+                        btnMealLunch.setBackgroundResource(R.drawable.lunch_background_selected);
+                        btnMealDinner.setBackgroundResource(R.drawable.dinner_background);
                         Parent.setMealIndex(Constants.MEAL_TYPE_LUNCH);
                         foodGroupSelected = true;
                     }
@@ -379,9 +372,9 @@ public class ParentMainActivity extends AppCompatActivity {
                 btnMealDinner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        btnMealBreakfast.setBackgroundResource(R.color.colorPrimary);
-                        btnMealLunch.setBackgroundResource(R.color.colorPrimary);
-                        btnMealDinner.setBackgroundResource(R.color.colorAccent);
+                        btnMealBreakfast.setBackgroundResource(R.drawable.breakfast_button_background);
+                        btnMealLunch.setBackgroundResource(R.drawable.lunch_background);
+                        btnMealDinner.setBackgroundResource(R.drawable.dinner_background_selected);
                         Parent.setMealIndex(Constants.MEAL_TYPE_DINNER);
                         foodGroupSelected = true;
                     }

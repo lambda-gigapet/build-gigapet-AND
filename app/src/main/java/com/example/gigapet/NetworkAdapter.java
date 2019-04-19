@@ -56,9 +56,7 @@ public class NetworkAdapter {
                 }
             }
 
-            // S03M03-10 add support for different types of request
             if((requestMethod.equals(POST) || requestMethod.equals(PUT)) && requestBody != null) {
-                // S03M03-11 write body of post request
                 connection.setDoInput(true);
                 final OutputStream outputStream = connection.getOutputStream();
                 outputStream.write(requestBody.toString().getBytes());

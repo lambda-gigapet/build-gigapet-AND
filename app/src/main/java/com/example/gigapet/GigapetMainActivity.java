@@ -84,7 +84,6 @@ public class GigapetMainActivity extends AppCompatActivity {
         gigapetImage.setImageBitmap(Constants.CURRENT_PET_BITMAP);
         gigapetName.setText(ChildDao.getCurrentChild().gigapet.getName());
         gigapetLvl.setText("Lvl - " +String.valueOf(ChildDao.getCurrentChild().gigapet.getExp()));
-
     }
 }
 

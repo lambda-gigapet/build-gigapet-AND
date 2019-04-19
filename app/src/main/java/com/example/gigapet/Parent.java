@@ -22,7 +22,6 @@ public class Parent {
         this.id = id;
         this.token = token;
         this.mealIndex = 1;
-        //ChildDao.loadFirstChild();
         loadChildren();
         GigapetDao.loadGigapets();
     }

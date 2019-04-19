@@ -45,7 +45,6 @@ public class RemoveChildListAdapter extends RecyclerView.Adapter<RemoveChildList
             }
         });
 
-
     }
 
     @Override
