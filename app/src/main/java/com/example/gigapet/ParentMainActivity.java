@@ -229,12 +229,12 @@ public class ParentMainActivity extends AppCompatActivity {
         switch (fragmentCounter) {
             case 2:
                 pieData = new ArrayList<>();
-                pieData.add(new SliceValue(34, R.color.colorFruit));
-                pieData.add(new SliceValue(34, R.color.veggieColor));
-                pieData.add(new SliceValue(20, R.color.colorCarb));
-                pieData.add(new SliceValue(54, R.color.colorProtein));
-                pieData.add(new SliceValue(54, R.color.colorDairy));
-                pieData.add(new SliceValue(54, R.color.colorTreats));
+                pieData.add(new SliceValue(34, Color.RED));
+                pieData.add(new SliceValue(34, Color.MAGENTA));
+                pieData.add(new SliceValue(20, Color.YELLOW));
+                pieData.add(new SliceValue(54, Color.GREEN));
+                pieData.add(new SliceValue(54, Color.CYAN));
+                pieData.add(new SliceValue(54, Color.BLUE));
 
                 seriesSwith = new BarGraphSeries<>(new DataPoint[]{
                         new DataPoint(0, 2),
@@ -252,12 +252,12 @@ public class ParentMainActivity extends AppCompatActivity {
             case 3:
 
                 pieData = new ArrayList<>();
-                pieData.add(new SliceValue(35, R.color.colorFruit));
-                pieData.add(new SliceValue(84, R.color.veggieColor));
-                pieData.add(new SliceValue(20, R.color.colorCarb));
-                pieData.add(new SliceValue(24, R.color.colorProtein));
-                pieData.add(new SliceValue(70, R.color.colorDairy));
-                pieData.add(new SliceValue(14, R.color.colorTreats));
+                pieData.add(new SliceValue(35, Color.RED));
+                pieData.add(new SliceValue(84, Color.MAGENTA));
+                pieData.add(new SliceValue(20, Color.YELLOW));
+                pieData.add(new SliceValue(24, Color.GREEN));
+                pieData.add(new SliceValue(70, Color.CYAN));
+                pieData.add(new SliceValue(14, Color.BLUE));
 
                 seriesSwith = new BarGraphSeries<>(new DataPoint[]{
                         new DataPoint(0, 2),
@@ -272,12 +272,12 @@ public class ParentMainActivity extends AppCompatActivity {
             case 4:
 
                 pieData = new ArrayList<>();
-                pieData.add(new SliceValue(37, R.color.colorFruit));
-                pieData.add(new SliceValue(22, R.color.veggieColor));
-                pieData.add(new SliceValue(60, R.color.colorCarb));
-                pieData.add(new SliceValue(24, R.color.colorProtein));
-                pieData.add(new SliceValue(80, R.color.colorDairy));
-                pieData.add(new SliceValue(14, R.color.colorTreats));
+                pieData.add(new SliceValue(37, Color.RED));
+                pieData.add(new SliceValue(22, Color.MAGENTA));
+                pieData.add(new SliceValue(60, Color.YELLOW));
+                pieData.add(new SliceValue(24, Color.GREEN));
+                pieData.add(new SliceValue(80, Color.CYAN));
+                pieData.add(new SliceValue(14, Color.BLUE));
 
                 seriesSwith = new BarGraphSeries<>(new DataPoint[]{
                         new DataPoint(0, 2),
